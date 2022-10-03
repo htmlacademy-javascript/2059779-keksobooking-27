@@ -8,11 +8,8 @@ const getDummyCoordinates = (min, max, points) => {
   if (min < 0 || max < 0) {
     return NaN;
   }
-  let swap;
   if (min > max) {
-    swap = max;
-    max = min;
-    min = swap;
+    [min, max] = [max, min];
   }
   return +((Math.random() * (max - min + 1) + min)).toFixed(points);
 };
