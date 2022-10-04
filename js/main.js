@@ -1,5 +1,5 @@
 const generateRandomInt = (min, max) => {
-  if (min < 0 || max < 0 ) {
+  if (min < 0 || max < 0 || min === max) {
     return NaN;
   }
   if (min > max) {
@@ -12,7 +12,7 @@ const generateDummyCoordinates = (min, max, points) => {
   if (points > 20) {
     points = 20;
   }
-  if (min < 0 || max < 0 || points < 0) {
+  if (min < 0 || max < 0 || points < 0 || min === max) {
     return NaN;
   }
   if (min > max) {
