@@ -22,16 +22,16 @@ const generateRandomPositiveFloat = (min, max, points) => {
     max = min;
     min = swap;
   }
-  return +((Math.random() * (max - min + 1) + min)).toFixed(points);
+  return +((Math.random() * (max - min) + min)).toFixed(points);
 };
 
 const AVATAR_PATH = 'img/avatars/';
 const HOUSING_TYPE = [
-  palace,
-  flat,
-  house,
-  bungalow,
-  hotel
+  'palace',
+  'flat',
+  'house',
+  'bungalow',
+  'hotel'
 ];
 
 const CHECKIN_HOURS = {
@@ -47,13 +47,27 @@ const CHECKOUT_HOURS = {
 };
 
 const HOUSING_FEATURES = [
-  wifi,
-  dishwasher,
-  parking,
-  washer,
-  elevator,
-  conditioner
+  'wifi',
+  'dishwasher',
+  'parking',
+  'washer',
+  'elevator',
+  'conditioner'
 ];
+
+const LOCATION_LATITUDE_RANGE = {
+  start: 35.65000,
+  end: 35.70000
+};
+
+const LOCATION_LONGITUDE_RANGE = {
+  start: 139.70000,
+  end: 139.80000
+};
+
+const LOCATION_PRECISION = 5;
+
+const ADS_COUNT = 10;
 
 let author = {
   avatar: 'img/avatars/user01.png'
@@ -73,12 +87,16 @@ let offer = {
   photos: ''
 };
 
-let location = {
-  lat: 1,
-  lng: 1
+
+const setLocation = () => {
+  return {
+    lat: generateRandomPositiveFloat(LOCATION_LATITUDE_RANGE.start, LOCATION_LATITUDE_RANGE.end, LOCATION_PRECISION),
+    lng: generateRandomPositiveFloat(LOCATION_LONGITUDE_RANGE.start, LOCATION_LONGITUDE_RANGE.end, LOCATION_PRECISION)
+  };
 };
 
-
+const similarLocations = Array.from({length: ADS_COUNT}, setLocation);
 
 generateRandomPositiveFloat(3, 4.5, 4);
 generateRandomPositiveInt(2.5, 10);
+console.log(similarLocations);
