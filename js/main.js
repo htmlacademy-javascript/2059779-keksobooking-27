@@ -127,13 +127,13 @@ const LOCATION_PRECISION = 5;
 const ADS_COUNT = 10;
 
 const generateRandomAuthor = () => ({
-  avatar: AVATAR_PATH + generateRandomPositiveInt(1, ADS_COUNT).toString().padStart(2, 0) + '.png'
+  avatar: `${AVATAR_PATH} ${generateRandomPositiveInt(1, ADS_COUNT).toString().padStart(2, 0)}.png`
 });
 
 const generateRandomHousing = () => ({
   /* Не могу определиться, что в данном случае лучше использовать: функцию с двумя аргументами, которая уже есть, новую функцию с одним аргументом или просто формулу. Вроде бы читается лучше новая функция. Из названия понятно, что делает. А есть ли способ написать функцию так, чтобы она брала аргумент из названия массива сама? */
-  title: TITLE_LEADINGS[generateRandomPositiveInt(0, TITLE_LEADINGS.length - 1)] + ' ' + TITLE_ITEMS[generateRandomArrayIndex(TITLE_ITEMS)] + ' ' + TITLE_ENDINGS[Math.floor(Math.random() * TITLE_ENDINGS.length)],
-  address: generateRandomPositiveFloat(LOCATION_LATITUDE_RANGE.start, LOCATION_LATITUDE_RANGE.end, LOCATION_PRECISION) + ', ' + generateRandomPositiveFloat(LOCATION_LONGITUDE_RANGE.start, LOCATION_LONGITUDE_RANGE.end, LOCATION_PRECISION),
+  title: `${TITLE_LEADINGS[generateRandomPositiveInt(0, TITLE_LEADINGS.length - 1)]} ${TITLE_ITEMS[generateRandomArrayIndex(TITLE_ITEMS)]} ${TITLE_ENDINGS[Math.floor(Math.random() * TITLE_ENDINGS.length)]}`,
+  address: `${generateRandomPositiveFloat(LOCATION_LATITUDE_RANGE.start, LOCATION_LATITUDE_RANGE.end, LOCATION_PRECISION)} ${generateRandomPositiveFloat(LOCATION_LONGITUDE_RANGE.start, LOCATION_LONGITUDE_RANGE.end, LOCATION_PRECISION)}`,
   price: generateRandomPositiveInt(1, PRICE_MAX),
   type: HOUSING_TYPES[generateRandomArrayIndex(HOUSING_TYPES)],
   rooms: generateRandomPositiveInt(1, ROOMS_MAX),
@@ -155,7 +155,6 @@ const generateRandomOffer = () => ({
   offer: generateRandomHousing(),
   location: generateRandomLocation()
 });
-
 
 const generateRandomOffers = () => Array.from({ length: ADS_COUNT }, generateRandomOffer);
 
