@@ -95,8 +95,6 @@ const setLocation = () => {
   };
 };
 
-const similarLocations = Array.from({length: ADS_COUNT}, setLocation);
-
 generateRandomPositiveFloat(3, 4.5, 4);
 generateRandomPositiveInt(2.5, 10);
-console.log(similarLocations);
+
