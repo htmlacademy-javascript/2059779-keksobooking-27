@@ -1,34 +1,3 @@
-const generateRandomPositiveInt = (min, max) => {
-  if (min < 0 || max < 0 || min === max) {
-    return NaN;
-  }
-  if (min > max) {
-    const swap = max;
-    max = min;
-    min = swap;
-  }
-  return Math.round((Math.random() * (max - min + 1) + min));
-};
-
-const generateRandomPositiveFloat = (min, max, points) => {
-  if (points > 20) {
-    points = 20;
-  }
-  if (min < 0 || max < 0 || points < 0 || min === max) {
-    return NaN;
-  }
-  if (min > max) {
-    const swap = max;
-    max = min;
-    min = swap;
-  }
-  return +((Math.random() * (max - min) + min)).toFixed(points);
-};
-
-const generateRandomArrayIndex = (Array) => Math.floor(Math.random() * Array.length);
-
-/*  В каком порядке лучше перечислять в файле функции и константы? Сначала константы, а потом функции или наоборот? */
-
 const AVATAR_PATH = 'img/avatars/';
 
 const TITLE_LEADINGS = [
@@ -76,7 +45,7 @@ const HOUSING_TYPES = [
 
 const ROOMS_MAX = 12;
 
-const GUESTS_MAX = 3; /* Больше 3-х не собираться! */
+const GUESTS_MAX = 3;
 
 const CHECKIN_HOURS = {
   early: '12:00',
@@ -114,7 +83,6 @@ const HOUSING_PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
 ];
 
-/* С одной стороны для локации наверное можно и один объект завести, но на мой взгляд два разных лучше читаются.  */
 const LOCATION_LATITUDE_RANGE = {
   start: 35.65000,
   end: 35.70000
@@ -129,14 +97,50 @@ const LOCATION_PRECISION = 5;
 
 const ADS_COUNT = 10;
 
+const generateRandomPositiveInt = (min, max) => {
+  if (min < 0 || max < 0 || min === max) {
+    return NaN;
+  }
+  const lower = Math.ceil(Math.min(min, max));
+  const upper = Math.floor(Math.max(min, max));
+  return Math.floor((Math.random() * (upper - lower + 1) + lower));
+};
+
+const generateRandomPositiveFloat = (min, max, points) => {
+  if (points > 20) {
+    points = 20;
+  }
+  if (min < 0 || max < 0 || points < 0 || min === max) {
+    return NaN;
+  }
+  if (min > max) {
+    const swap = max;
+    max = min;
+    min = swap;
+  }
+  return +((Math.random() * (max - min) + min)).toFixed(points);
+};
+
+const generateRandomArrayIndex = (Array) => Math.floor(Math.random() * Array.length);
+
+const generateAvatarPath = () => `${AVATAR_PATH}${generateRandomPositiveInt(1, ADS_COUNT).toString().padStart(2, 0)}.png`;
+
 const generateRandomAuthor = () => ({
-  avatar: `${AVATAR_PATH} ${generateRandomPositiveInt(1, ADS_COUNT).toString().padStart(2, 0)}.png`
+  avatar: generateAvatarPath()
 });
 
-const generateRandomHousing = () => ({
-  /* Не могу определиться, что в данном случае лучше использовать: функцию с двумя аргументами, которая уже есть, новую функцию с одним аргументом или просто формулу. Вроде бы читается лучше новая функция. Из названия понятно, что делает. А есть ли способ написать функцию так, чтобы она брала аргумент из названия массива сама? */
-  title: `${TITLE_LEADINGS[generateRandomPositiveInt(0, TITLE_LEADINGS.length - 1)]} ${TITLE_ITEMS[generateRandomArrayIndex(TITLE_ITEMS)]} ${TITLE_ENDINGS[Math.floor(Math.random() * TITLE_ENDINGS.length)]}`,
-  address: `${generateRandomPositiveFloat(LOCATION_LATITUDE_RANGE.start, LOCATION_LATITUDE_RANGE.end, LOCATION_PRECISION)} ${generateRandomPositiveFloat(LOCATION_LONGITUDE_RANGE.start, LOCATION_LONGITUDE_RANGE.end, LOCATION_PRECISION)}`,
+const generateTitle = () => `${TITLE_LEADINGS[generateRandomPositiveInt(0, TITLE_LEADINGS.length - 1)]} ${TITLE_ITEMS[generateRandomArrayIndex(TITLE_ITEMS)]} ${TITLE_ENDINGS[Math.floor(Math.random() * TITLE_ENDINGS.length)]}`;
+
+const generateRandomLocation = () => ({
+  lat: generateRandomPositiveFloat(LOCATION_LATITUDE_RANGE.start, LOCATION_LATITUDE_RANGE.end, LOCATION_PRECISION),
+  lng: generateRandomPositiveFloat(LOCATION_LONGITUDE_RANGE.start, LOCATION_LONGITUDE_RANGE.end, LOCATION_PRECISION)
+});
+
+const location = generateRandomLocation();
+
+const generateRandomHousing = (randomLocation) => ({
+  title: generateTitle(),
+  address: `${randomLocation.lat}, ${randomLocation.lng}`,
   price: generateRandomPositiveInt(1, PRICE_MAX),
   type: HOUSING_TYPES[generateRandomArrayIndex(HOUSING_TYPES)],
   rooms: generateRandomPositiveInt(1, ROOMS_MAX),
@@ -148,15 +152,10 @@ const generateRandomHousing = () => ({
   photos: HOUSING_PHOTOS.slice(0, generateRandomPositiveInt(1, HOUSING_PHOTOS.length)),
 });
 
-const generateRandomLocation = () => ({
-  lat: generateRandomPositiveFloat(LOCATION_LATITUDE_RANGE.start, LOCATION_LATITUDE_RANGE.end, LOCATION_PRECISION),
-  lng: generateRandomPositiveFloat(LOCATION_LONGITUDE_RANGE.start, LOCATION_LONGITUDE_RANGE.end, LOCATION_PRECISION)
-});
-
 const generateRandomOffer = () => ({
   author: generateRandomAuthor(),
-  offer: generateRandomHousing(),
-  location: generateRandomLocation()
+  offer: generateRandomHousing(location),
+  location: location
 });
 
 const generateRandomOffers = () => Array.from({ length: ADS_COUNT }, generateRandomOffer);
