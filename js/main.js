@@ -131,16 +131,16 @@ const generateRandomAuthor = () => ({
 
 const generateTitle = () => `${TITLE_LEADINGS[generateRandomPositiveInt(0, TITLE_LEADINGS.length - 1)]} ${TITLE_ITEMS[generateRandomArrayIndex(TITLE_ITEMS)]} ${TITLE_ENDINGS[Math.floor(Math.random() * TITLE_ENDINGS.length)]}`;
 
-const generateRandomLocation = () => ({
+const generateRandomCoordinates = () => ({
   lat: generateRandomPositiveFloat(LOCATION_LATITUDE_RANGE.start, LOCATION_LATITUDE_RANGE.end, LOCATION_PRECISION),
   lng: generateRandomPositiveFloat(LOCATION_LONGITUDE_RANGE.start, LOCATION_LONGITUDE_RANGE.end, LOCATION_PRECISION)
 });
 
-const location = generateRandomLocation();
+const coordinates = generateRandomCoordinates();
 
-const generateRandomHousing = (randomLocation) => ({
+const generateRandomHousing = (location) => ({
   title: generateTitle(),
-  address: `${randomLocation.lat}, ${randomLocation.lng}`,
+  address: `${location.lat}, ${location.lng}`,
   price: generateRandomPositiveInt(1, PRICE_MAX),
   type: HOUSING_TYPES[generateRandomArrayIndex(HOUSING_TYPES)],
   rooms: generateRandomPositiveInt(1, ROOMS_MAX),
@@ -154,8 +154,8 @@ const generateRandomHousing = (randomLocation) => ({
 
 const generateRandomOffer = () => ({
   author: generateRandomAuthor(),
-  offer: generateRandomHousing(location),
-  location: location
+  offer: generateRandomHousing(coordinates),
+  location: coordinates
 });
 
 const generateRandomOffers = () => Array.from({ length: ADS_COUNT }, generateRandomOffer);
