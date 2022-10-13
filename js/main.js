@@ -1,4 +1,4 @@
-const AVATAR_PATH = 'img/avatars/';
+const AVATAR_PREFIX = 'img/avatars/';
 
 const TITLE_LEADINGS = [
   'Отличный',
@@ -101,7 +101,7 @@ const generateRandomPositiveInt = (min, max) => {
   if (min < 0 || max < 0 || min === max) {
     return NaN;
   }
-  const lower = Math.ceil(Math.min(min, max));
+  const lower = Math.floor(Math.min(min, max));
   const upper = Math.floor(Math.max(min, max));
   return Math.floor((Math.random() * (upper - lower + 1) + lower));
 };
@@ -123,20 +123,13 @@ const generateRandomPositiveFloat = (min, max, points) => {
 
 const generateRandomArrayIndex = (Array) => Math.floor(Math.random() * Array.length);
 
-const generateAvatarPath = () => `${AVATAR_PATH}${generateRandomPositiveInt(1, ADS_COUNT).toString().padStart(2, 0)}.png`;
+const generateAvatarPath = () => `${AVATAR_PREFIX}${generateRandomPositiveInt(1, ADS_COUNT).toString().padStart(2, 0)}.png`;
 
 const generateRandomAuthor = () => ({
   avatar: generateAvatarPath()
 });
 
 const generateTitle = () => `${TITLE_LEADINGS[generateRandomPositiveInt(0, TITLE_LEADINGS.length - 1)]} ${TITLE_ITEMS[generateRandomArrayIndex(TITLE_ITEMS)]} ${TITLE_ENDINGS[Math.floor(Math.random() * TITLE_ENDINGS.length)]}`;
-
-const generateRandomCoordinates = () => ({
-  lat: generateRandomPositiveFloat(LOCATION_LATITUDE_RANGE.start, LOCATION_LATITUDE_RANGE.end, LOCATION_PRECISION),
-  lng: generateRandomPositiveFloat(LOCATION_LONGITUDE_RANGE.start, LOCATION_LONGITUDE_RANGE.end, LOCATION_PRECISION)
-});
-
-const coordinates = generateRandomCoordinates();
 
 const generateRandomHousing = (location) => ({
   title: generateTitle(),
@@ -145,18 +138,27 @@ const generateRandomHousing = (location) => ({
   type: HOUSING_TYPES[generateRandomArrayIndex(HOUSING_TYPES)],
   rooms: generateRandomPositiveInt(1, ROOMS_MAX),
   guests: generateRandomPositiveInt(1, GUESTS_MAX),
-  checkin: Object.values(CHECKIN_HOURS)[generateRandomArrayIndex(Object.values(CHECKIN_HOURS))], /* Как-то сложно читается. Не знаю, как проще. */
+  checkin: Object.values(CHECKIN_HOURS)[generateRandomArrayIndex(Object.values(CHECKIN_HOURS))],
   checkout: Object.values(CHECKOUT_HOURS)[generateRandomArrayIndex(Object.values(CHECKOUT_HOURS))],
   features: HOUSING_FEATURES.slice(0, generateRandomPositiveInt(1, HOUSING_FEATURES.length)),
   description: HOUSING_DESCRIPTIONS[generateRandomArrayIndex(HOUSING_DESCRIPTIONS)],
   photos: HOUSING_PHOTOS.slice(0, generateRandomPositiveInt(1, HOUSING_PHOTOS.length)),
 });
 
-const generateRandomOffer = () => ({
-  author: generateRandomAuthor(),
-  offer: generateRandomHousing(coordinates),
-  location: coordinates
-});
+const generateRandomOffer = () => {
+  const generateRandomCoordinates = () => ({
+    lat: generateRandomPositiveFloat(LOCATION_LATITUDE_RANGE.start, LOCATION_LATITUDE_RANGE.end, LOCATION_PRECISION),
+    lng: generateRandomPositiveFloat(LOCATION_LONGITUDE_RANGE.start, LOCATION_LONGITUDE_RANGE.end, LOCATION_PRECISION)
+  });
+
+  const coordinates = generateRandomCoordinates();
+
+  return {
+    author: generateRandomAuthor(),
+    offer: generateRandomHousing(coordinates),
+    location: coordinates
+  };
+};
 
 const generateRandomOffers = () => Array.from({ length: ADS_COUNT }, generateRandomOffer);
 
