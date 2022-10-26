@@ -97,7 +97,7 @@ const LOCATION_PRECISION = 5;
 
 const ADS_COUNT = 10;
 
-const generateAvatarPath = () => `img/avatars/${generateRandomPositiveInt(1, ADS_COUNT).toString().padStart(2, 0)}.png`;
+const generateAvatarPath = () => `img/avatars/user${generateRandomPositiveInt(1, ADS_COUNT).toString().padStart(2, 0)}.png`;
 
 const generateRandomAuthor = () => ({
   avatar: generateAvatarPath()
@@ -113,7 +113,7 @@ const generateTitle = () => `${TITLE_LEADINGS[generateRandomPositiveInt(0, TITLE
 const generateRandomHousing = (location) => ({
   title: generateTitle(),
   address: `${location.lat}, ${location.lng}`,
-  price: generateRandomPositiveInt(1, PRICE_MAX),
+  price: generateRandomPositiveInt(1, PRICE_MAX).toLocaleString('ru'),
   type: HOUSING_TYPES[generateRandomArrayIndex(HOUSING_TYPES)],
   rooms: generateRandomPositiveInt(1, ROOMS_MAX),
   guests: generateRandomPositiveInt(1, GUESTS_MAX),
@@ -134,6 +134,6 @@ const generateRandomOffer = () => {
   };
 };
 
-const generateRandomOffers = () => Array.from({ length: ADS_COUNT }, generateRandomOffer);
+const generateRandomOffers = (count) => Array.from({ length: count }, generateRandomOffer);
 
 export { generateRandomOffers };
