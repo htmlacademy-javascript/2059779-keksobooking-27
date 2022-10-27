@@ -28,7 +28,7 @@ similarOffers.forEach(({ author, offer }) => {
 
   const featuresList = offerELement.querySelector('.popup__features');
   const featuresItems = featuresList.querySelectorAll('.popup__feature');
-  const housingFeatures = offer.features; /** Что-то у меня не получается с синтаксисом, чтобы без этой переменной метод .some приделать. */
+  const housingFeatures = offer.features; /** Вспомнил, что можно сделать деструктуризацию объекта. Но не знаю, убирать ли переменную теперь. */
   featuresItems.forEach((item) => {
     const isInclude = housingFeatures.some(
       (feature) => item.classList.contains(`popup__feature--${feature}`),);
