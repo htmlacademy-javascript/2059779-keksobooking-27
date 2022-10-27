@@ -1,6 +1,5 @@
 import { generateRandomOffers } from './mockup.js';
 import { nounsDeclension } from './nouns-declension.js';
-import { removeEmptyElements } from './remove-empty-elements.js';
 
 const HOUSING_TYPES_TITLES = {
   flat: 'Квартира',
@@ -19,38 +18,47 @@ const similarOffers = generateRandomOffers(1);
 
 similarOffers.forEach(({ author, offer }) => {
   const offerELement = offerTemplate.cloneNode(true);
-  offerELement.querySelector('.popup__title').textContent = offer.title;
+  offerELement.querySelector('.popup__title').textContent = offer.title; /** Посмотрел в ТЗ обязательные поля. Их нет смысла проверять. Или как минимум удалять. */
   offerELement.querySelector('.popup__text--address').textContent = offer.address;
-  offerELement.querySelector('.popup__text--price').innerHTML = `${offer.price} <span>₽/ночь</span>`;
+  offerELement.querySelector('[data-price]').textContent = offer.price; /** В ретро рассказали о недостатках innerHTML и показали такой способ. */
   offerELement.querySelector('.popup__type').textContent = HOUSING_TYPES_TITLES[offer.type];
   offerELement.querySelector('.popup__text--capacity').textContent = `${offer.rooms} ${nounsDeclension(offer.rooms, ['комната', 'комнаты', 'комнат'])} для ${offer.guests} ${nounsDeclension(offer.guests, ['гостя', 'гостей', 'гостей'])}`;
   offerELement.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
 
   const featuresList = offerELement.querySelector('.popup__features');
-  const featuresItems = featuresList.querySelectorAll('.popup__feature');
-  const housingFeatures = offer.features; /** Вспомнил, что можно сделать деструктуризацию объекта. Но не знаю, убирать ли переменную теперь. */
-  featuresItems.forEach((item) => {
-    const isInclude = housingFeatures.some(
-      (feature) => item.classList.contains(`popup__feature--${feature}`),);
-    if (!isInclude) {
-      item.remove();
-    }
-  });
+  const featuresListItem = featuresList.querySelector('.popup__feature');
+  featuresList.innerHTML = '';
+  featuresListItem.classList.remove(featuresListItem[1]);
+  if (offer.features && offer.features.length) {
+    const baseClass = featuresListItem.classList[0];
+    const modificatorClass = `${baseClass}--`;
+    offer.features.forEach((item) => {
+      featuresListItem.classList.add(`${modificatorClass}${item}`);
+      featuresList.append(featuresListItem.cloneNode(false));
+    });
+  }
 
-  offerELement.querySelector('.popup__description').textContent = offer.description;
+  if (offer.description && offer.description.length) {
+    offerELement.querySelector('.popup__description').textContent = offer.description;
+  } else {
+    offerELement.querySelector('.popup__description').remove();
+  }
 
   const photosContainer = offerELement.querySelector('.popup__photos');
   const photoElement = photosContainer.querySelector('.popup__photo');
   photosContainer.innerHTML = '';
-  const photosList = offer.photos;
-  photosList.forEach((photo) => {
-    photoElement.src = photo;
-    photosContainer.append(photoElement.cloneNode(true));
-  });
+  if (offer.photos && offer.photos.length) {
+    offer.photos.forEach((photo) => {
+      photoElement.src = photo; /** Я видел, как другие студенты добавляют в alt текст заголовок объявления. Я с этим не согласен. Считаю, что лучше сюда подойдёт шаблонная фраза "Фотография жилья". */
+      photosContainer.append(photoElement.cloneNode(false));
+    });
+  }
 
-  offerELement.querySelector('.popup__avatar').src = author.avatar;
-
-  removeEmptyElements(offerELement);
+  if (author.avatar && author.avatar.length) {
+    offerELement.querySelector('.popup__avatar').src = author.avatar;
+  } else {
+    offerELement.querySelector('.popup__avatar').remove();
+  }
 
   mapCanvas.append(offerELement);
 });
