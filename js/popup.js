@@ -19,7 +19,7 @@ const markupOffers = (offersData) => {
     const offerELement = offerTemplate.cloneNode(true);
     offerELement.querySelector('.popup__title').textContent = offer.title; /** Посмотрел в ТЗ обязательные поля. Их нет смысла проверять. Или как минимум удалять. */
     offerELement.querySelector('.popup__text--address').textContent = offer.address;
-    offerELement.querySelector('[data-price]').textContent = offer.price; /** В ретро рассказали о недостатках innerHTML и показали такой способ. */
+    offerELement.querySelector('.popup__text--price').textContent = `${offer.price} ₽/ночь`;
     offerELement.querySelector('.popup__type').textContent = HOUSING_TYPES_TITLES[offer.type];
     offerELement.querySelector('.popup__text--capacity').textContent = `${offer.rooms} ${nounsDeclension(offer.rooms, ['комната', 'комнаты', 'комнат'])} для ${offer.guests} ${nounsDeclension(offer.guests, ['гостя', 'гостей', 'гостей'])}`;
     offerELement.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
