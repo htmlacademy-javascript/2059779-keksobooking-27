@@ -17,18 +17,18 @@ const offerTemplate = document.querySelector('#card')
 
 const similarOffers = generateRandomOffers(1);
 
-similarOffers.forEach((housing) => {
+similarOffers.forEach(({ author, offer }) => {
   const offerELement = offerTemplate.cloneNode(true);
-  offerELement.querySelector('.popup__title').textContent = housing.offer.title; /** Здесь как-то криво выходит с именами. В целом это предложение, но внутри него по ТЗ лежит объект offer.  */
-  offerELement.querySelector('.popup__text--address').textContent = housing.offer.address;
-  offerELement.querySelector('.popup__text--price').innerHTML = `${housing.offer.price} <span>₽/ночь</span>`;
-  offerELement.querySelector('.popup__type').textContent = HOUSING_TYPES_TITLES[housing.offer.type];
-  offerELement.querySelector('.popup__text--capacity').textContent = `${housing.offer.rooms} ${nounsDeclension(housing.offer.rooms, ['комната', 'комнаты', 'комнат'])} для ${housing.offer.guests} ${nounsDeclension(housing.offer.guests, ['гостя', 'гостей', 'гостей'])}`;
-  offerELement.querySelector('.popup__text--time').textContent = `Заезд после ${housing.offer.checkin}, выезд до ${housing.offer.checkout}`;
+  offerELement.querySelector('.popup__title').textContent = offer.title;
+  offerELement.querySelector('.popup__text--address').textContent = offer.address;
+  offerELement.querySelector('.popup__text--price').innerHTML = `${offer.price} <span>₽/ночь</span>`;
+  offerELement.querySelector('.popup__type').textContent = HOUSING_TYPES_TITLES[offer.type];
+  offerELement.querySelector('.popup__text--capacity').textContent = `${offer.rooms} ${nounsDeclension(offer.rooms, ['комната', 'комнаты', 'комнат'])} для ${offer.guests} ${nounsDeclension(offer.guests, ['гостя', 'гостей', 'гостей'])}`;
+  offerELement.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
 
   const featuresList = offerELement.querySelector('.popup__features');
   const featuresItems = featuresList.querySelectorAll('.popup__feature');
-  const housingFeatures = housing.offer.features; /** Что-то у меня не получается с синтаксисом, чтобы без этой переменной метод .some приделать. */
+  const housingFeatures = offer.features; /** Что-то у меня не получается с синтаксисом, чтобы без этой переменной метод .some приделать. */
   featuresItems.forEach((item) => {
     const isInclude = housingFeatures.some(
       (feature) => item.classList.contains(`popup__feature--${feature}`),);
@@ -37,18 +37,18 @@ similarOffers.forEach((housing) => {
     }
   });
 
-  offerELement.querySelector('.popup__description').textContent = housing.offer.description;
+  offerELement.querySelector('.popup__description').textContent = offer.description;
 
   const photosContainer = offerELement.querySelector('.popup__photos');
   const photoElement = photosContainer.querySelector('.popup__photo');
   photosContainer.innerHTML = '';
-  const photosList = housing.offer.photos;
+  const photosList = offer.photos;
   photosList.forEach((photo) => {
     photoElement.src = photo;
     photosContainer.append(photoElement.cloneNode(true));
   });
 
-  offerELement.querySelector('.popup__avatar').src = housing.author.avatar;
+  offerELement.querySelector('.popup__avatar').src = author.avatar;
 
   removeEmptyElements(offerELement);
 
