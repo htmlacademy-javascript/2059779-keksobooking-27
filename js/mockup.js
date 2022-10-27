@@ -113,7 +113,7 @@ const generateTitle = () => `${TITLE_LEADINGS[generateRandomPositiveInt(0, TITLE
 const generateRandomHousing = (location) => ({
   title: generateTitle(),
   address: `${location.lat}, ${location.lng}`,
-  price: generateRandomPositiveInt(1, PRICE_MAX).toLocaleString('ru'),
+  price: generateRandomPositiveInt(1, PRICE_MAX),
   type: HOUSING_TYPES[generateRandomArrayIndex(HOUSING_TYPES)],
   rooms: generateRandomPositiveInt(1, ROOMS_MAX),
   guests: generateRandomPositiveInt(1, GUESTS_MAX),
