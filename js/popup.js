@@ -1,4 +1,6 @@
 import { generateRandomOffers } from './mockup.js';
+import { nounsDeclension } from './nouns-declension.js';
+import { removeEmptyElements } from './remove-empty-elements.js';
 
 const HOUSING_TYPES_TITLES = {
   flat: 'Квартира',
@@ -21,7 +23,7 @@ similarOffers.forEach((housing) => {
   offerELement.querySelector('.popup__text--address').textContent = housing.offer.address;
   offerELement.querySelector('.popup__text--price').innerHTML = `${housing.offer.price} <span>₽/ночь</span>`;
   offerELement.querySelector('.popup__type').textContent = HOUSING_TYPES_TITLES[housing.offer.type];
-  offerELement.querySelector('.popup__text--capacity').textContent = `${housing.offer.rooms} комнаты для ${housing.offer.guests} гостей`; /** Падежи едут с некоторыми числами. Делать ли здесь проверку числа, чтобы менять падеж или дальше всё равно всё будет с сервера приходить? */
+  offerELement.querySelector('.popup__text--capacity').textContent = `${housing.offer.rooms} ${nounsDeclension(housing.offer.rooms, ['комната', 'комнаты', 'комнат'])} для ${housing.offer.guests} ${nounsDeclension(housing.offer.guests, ['гостя', 'гостей', 'гостей'])}`;
   offerELement.querySelector('.popup__text--time').textContent = `Заезд после ${housing.offer.checkin}, выезд до ${housing.offer.checkout}`;
 
   const featuresList = offerELement.querySelector('.popup__features');
@@ -47,6 +49,8 @@ similarOffers.forEach((housing) => {
   });
 
   offerELement.querySelector('.popup__avatar').src = housing.author.avatar;
+
+  removeEmptyElements(offerELement);
 
   mapCanvas.append(offerELement);
 });
