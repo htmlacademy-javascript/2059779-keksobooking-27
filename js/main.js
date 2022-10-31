@@ -1,3 +1,5 @@
 import { generateRandomOffers } from './mockup.js';
-generateRandomOffers();
+import { markupOffers } from './popup.js';
 
+const similarOffers = generateRandomOffers(1);
+markupOffers(similarOffers);

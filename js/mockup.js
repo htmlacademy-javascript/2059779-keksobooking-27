@@ -97,7 +97,7 @@ const LOCATION_PRECISION = 5;
 
 const ADS_COUNT = 10;
 
-const generateAvatarPath = () => `img/avatars/${generateRandomPositiveInt(1, ADS_COUNT).toString().padStart(2, 0)}.png`;
+const generateAvatarPath = () => `img/avatars/user${generateRandomPositiveInt(1, ADS_COUNT).toString().padStart(2, 0)}.png`;
 
 const generateRandomAuthor = () => ({
   avatar: generateAvatarPath()
@@ -134,6 +134,6 @@ const generateRandomOffer = () => {
   };
 };
 
-const generateRandomOffers = () => Array.from({ length: ADS_COUNT }, generateRandomOffer);
+const generateRandomOffers = (count) => Array.from({ length: count }, generateRandomOffer);
 
 export { generateRandomOffers };
