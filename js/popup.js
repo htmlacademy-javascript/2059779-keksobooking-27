@@ -14,7 +14,7 @@ const offerTemplate = document.querySelector('#card')
   .querySelector('.popup');
 
 const markupOffers = (offersData) => {
-  const { author, offer } = offersData[0];
+  const { author, offer } = offersData;
 
   const offerELement = offerTemplate.cloneNode(true);
   offerELement.querySelector('.popup__title').textContent = offer.title; /** Посмотрел в ТЗ обязательные поля. Их нет смысла проверять. Или как минимум удалять. */
