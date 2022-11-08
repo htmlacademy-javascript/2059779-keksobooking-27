@@ -12,6 +12,5 @@ const turnFormOn = () => {
     fieldset.disabled = false;
     fieldset.classList.remove(`${fieldset.classList[0]}--disabled`);
   });
-};
 
 export { turnFormOff, turnFormOn };
