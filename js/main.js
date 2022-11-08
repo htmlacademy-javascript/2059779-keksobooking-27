@@ -8,3 +8,4 @@ const offer = similarOffers[0];
 markupOffers(offer);
 
 turnFormOff('.ad_form');
+turnFormOn('.ad_form');
