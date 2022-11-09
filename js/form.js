@@ -50,7 +50,7 @@ pristine.addValidator(
 const roomsCheck = () => GUESTS_TO_ROOMS[capacityElement].includes(roomElementValue);
 
 pristine.addValidator(
-  capacityElement,
+  roomElement,
   roomsCheck,
   'Для такого количества гостей нужно больше комнат'
 );
