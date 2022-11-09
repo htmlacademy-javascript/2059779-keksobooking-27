@@ -4,12 +4,6 @@ const ROOMS_TO_GUESTS = {
   3: ['1', '2', '3'],
   100: ['0']
 };
-const GUESTS_TO_ROOMS = {
-  0: ['100'],
-  1: ['1', '2', '3'],
-  2: ['2', '3'],
-  3: ['3']
-};
 
 const offerForm = document.querySelector('.ad-form');
 const capacityElement = offerForm.querySelector('#capacity');
@@ -28,6 +22,8 @@ const pristine = new Pristine(offerForm,
   true
 );
 
+const capacityCheck = () => ROOMS_TO_GUESTS[roomElementValue].includes(capacityElementValue);
+
 const onRoomNumberChange = () => {
   pristine.validate(capacityElement);
   pristine.validate(roomElement);
@@ -38,20 +34,15 @@ const onGuestsNumberChange = () => {
   pristine.validate(roomElement);
 };
 
-
-const capacityCheck = () => ROOMS_TO_GUESTS[roomElementValue].includes(capacityElementValue);
-
 pristine.addValidator(
   capacityElement,
   capacityCheck,
   'Для такого количества гостей нужно больше комнат'
 );
 
-const roomsCheck = () => GUESTS_TO_ROOMS[capacityElementValue].includes(roomElementValue);
-
 pristine.addValidator(
   roomElement,
-  roomsCheck,
+  capacityCheck,
   'Для такого количества гостей нужно больше комнат'
 );
 
