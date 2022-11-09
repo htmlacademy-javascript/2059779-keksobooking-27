@@ -6,8 +6,10 @@ const capacityElement = offerForm.querySelector('#capacity');
 const pristine = new Pristine(offerForm,
   {
     classTo: 'ad-form__element',
+    errorClass: 'ad-form__element--invalid',
     errorTextParent: 'ad-form__element',
-    errorTextClass: 'ad-form__element--invalid'
+    errorTextTag: 'span',
+    errorTextClass: 'text-help',
   },
   true
 );
