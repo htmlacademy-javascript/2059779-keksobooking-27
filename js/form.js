@@ -73,6 +73,14 @@ timeOutElement.addEventListener('change', onTimeOutChange);
 roomElement.addEventListener('change', onRoomNumberChange);
 capacityElement.addEventListener('change', onGuestsNumberChange);
 
+const priceCheck = () => priceELement.value <= HOUSING_TYPE_PRICE[typeELementValue];
+
+pristine.addValidator(
+  priceELement,
+  priceCheck,
+  'Стоимость должна быть выше'
+);
+
 const onTypeElementChange = function () {
   priceELement.placeholder = HOUSING_TYPE_PRICE[typeELementValue];
 };
