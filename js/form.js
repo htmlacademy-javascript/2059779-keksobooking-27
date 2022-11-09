@@ -20,3 +20,13 @@ pristine.addValidator(
   capacityCheck,
   'Для такого количества гостей нужно больше комнат'
 );
+
+offerForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  const isValid = pristine.validate();
+  if (isValid) {
+    console.log('Можно отправлять');
+  } else {
+    console.log('Форма невалидна');
+  }
+});
