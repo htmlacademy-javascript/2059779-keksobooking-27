@@ -19,9 +19,10 @@ const roomElement = offerForm.querySelector('#room_number');
 const roomElementValue = roomElement.value;
 const capacityElementValue = capacityElement.value;
 const priceELement = offerForm.querySelector('#price');
-const priceELementValue = priceELement.value;
 const timeInElement = offerForm.querySelector('#timein');
 const timeOutElement = offerForm.querySelector('#timeout');
+const typeElement = offerForm.querySelector('#type');
+const typeELementValue = typeElement.value;
 
 const pristine = new Pristine(offerForm,
   {
@@ -72,11 +73,11 @@ timeOutElement.addEventListener('change', onTimeOutChange);
 roomElement.addEventListener('change', onRoomNumberChange);
 capacityElement.addEventListener('change', onGuestsNumberChange);
 
-const onPriceElementChange = function () {
-  priceELement.placeholder = HOUSING_TYPE_PRICE[priceELementValue];
+const onTypeElementChange = function () {
+  priceELement.placeholder = HOUSING_TYPE_PRICE[typeELementValue];
 };
 
-priceELement.addEventListener('change', onPriceElementChange);
+typeElement.addEventListener('change', onTypeElementChange);
 
 offerForm.addEventListener('submit', (evt) => {
   if (!pristine.validate()) { evt.preventDefault(); }
