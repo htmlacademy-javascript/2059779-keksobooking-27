@@ -57,6 +57,9 @@ pristine.addValidator(
   'Для такого количества гостей нужно больше комнат'
 );
 
+roomElement.addEventListener('change', onRoomNumberChange);
+capacityElement.addEventListener('change', onGuestsNumberChange);
+
 // Изменение времени заселения и выселения
 const onTimeInChange = function () {
   timeOutElement.value = timeInElement.value;
@@ -69,11 +72,10 @@ const onTimeOutChange = function () {
 timeInElement.addEventListener('change', onTimeInChange);
 timeOutElement.addEventListener('change', onTimeOutChange);
 
-roomElement.addEventListener('change', onRoomNumberChange);
-capacityElement.addEventListener('change', onGuestsNumberChange);
-
 // Проверка цены в зависимости от выбранного типа жилья
 const priceCheck = () => priceELement.value >= HOUSING_TYPE_PRICE[typeElement.value];
+
+const onPriceCheck = () => pristine.validate(priceELement);
 
 pristine.addValidator(
   priceELement,
@@ -81,7 +83,7 @@ pristine.addValidator(
   'Стоимость должна быть выше'
 );
 
-priceELement.addEventListener('change', priceCheck);
+priceELement.addEventListener('change', onPriceCheck);
 
 const onTypeElementChange = function () {
   priceELement.placeholder = HOUSING_TYPE_PRICE[typeElement.value];
