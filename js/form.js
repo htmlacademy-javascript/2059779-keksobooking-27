@@ -18,9 +18,10 @@ const capacityElement = offerForm.querySelector('#capacity');
 const roomElement = offerForm.querySelector('#room_number');
 const timeInElement = offerForm.querySelector('#timein');
 const timeOutElement = offerForm.querySelector('#timeout');
-const priceELement = offerForm.querySelector('#price');
+const priceElement = offerForm.querySelector('#price');
 const typeElement = offerForm.querySelector('#type');
 
+// Добавляем экземпляр Pristine. Из материалов и объяснений Академии, я так и не понял, что такое new и экземпляр. Я вижу это просто как какую-то инизиализацию скрипта, где мы добавляем на него ссылку и передаём объект настроек.
 const pristine = new Pristine(offerForm,
   {
     classTo: 'ad-form__element',
@@ -33,18 +34,10 @@ const pristine = new Pristine(offerForm,
 );
 
 // Проверка количества комнат и количества гостей
+// Функция, которая содержит логику проверки
 const capacityCheck = () => ROOMS_TO_GUESTS[roomElement.value].includes(capacityElement.value);
 
-const onRoomNumberChange = () => {
-  pristine.validate(capacityElement);
-  pristine.validate(roomElement);
-};
-
-const onGuestsNumberChange = () => {
-  pristine.validate(capacityElement);
-  pristine.validate(roomElement);
-};
-
+// Метод, который передаёт на валидацию определённого элемента нашу функцию.
 pristine.addValidator(
   capacityElement,
   capacityCheck,
@@ -57,6 +50,19 @@ pristine.addValidator(
   'Для такого количества гостей нужно больше комнат'
 );
 
+// Функция, которая вызывает валидатор на два элемента. На два, потому что их значения зависимы друг от друга.
+const onRoomNumberChange = () => {
+  pristine.validate(capacityElement);
+  pristine.validate(roomElement);
+};
+
+// Вторая функция, для второго слушателя.
+const onGuestsNumberChange = () => {
+  pristine.validate(capacityElement);
+  pristine.validate(roomElement);
+};
+
+// Навешиваем обработчики событий на элементы с функциями, которые содержат валидацию.
 roomElement.addEventListener('change', onRoomNumberChange);
 capacityElement.addEventListener('change', onGuestsNumberChange);
 
@@ -69,24 +75,28 @@ const onTimeOutChange = function () {
   timeInElement.value = timeOutElement.value;
 };
 
+// Навешиваю два обработчика. Не знаю, как сделать изящнее.
 timeInElement.addEventListener('change', onTimeInChange);
 timeOutElement.addEventListener('change', onTimeOutChange);
 
 // Проверка цены в зависимости от выбранного типа жилья
-const priceCheck = () => priceELement.value >= HOUSING_TYPE_PRICE[typeElement.value];
+const priceCheck = () => priceElement.value >= HOUSING_TYPE_PRICE[typeElement.value];
 
-const onPriceCheck = () => pristine.validate(priceELement);
-
+// Снова сообщаю валидатору, что хочу проверять элемент цены по особым правилам. Передаю функцию.
 pristine.addValidator(
-  priceELement,
+  priceElement,
   priceCheck,
   'Стоимость должна быть выше'
 );
 
-priceELement.addEventListener('change', onPriceCheck);
+// Функция, которая валидирует элемент цены.
+const onPriceCheck = () => pristine.validate(priceElement);
+
+priceElement.addEventListener('change', onPriceCheck);
+typeElement.addEventListener('change', onPriceCheck);
 
 const onTypeElementChange = function () {
-  priceELement.placeholder = HOUSING_TYPE_PRICE[typeElement.value];
+  priceElement.placeholder = HOUSING_TYPE_PRICE[typeElement.value];
 };
 
 typeElement.addEventListener('change', onTypeElementChange);
