@@ -14,15 +14,17 @@ const HOUSING_TYPE_PRICE = {
 };
 
 const offerForm = document.querySelector('.ad-form');
+
 const capacityElement = offerForm.querySelector('#capacity');
+
 const roomElement = offerForm.querySelector('#room_number');
-const roomElementValue = roomElement.value;
-const capacityElementValue = capacityElement.value;
-const priceELement = offerForm.querySelector('#price');
+
 const timeInElement = offerForm.querySelector('#timein');
 const timeOutElement = offerForm.querySelector('#timeout');
+
+const priceELement = offerForm.querySelector('#price');
+
 const typeElement = offerForm.querySelector('#type');
-const typeELementValue = typeElement.value;
 
 const pristine = new Pristine(offerForm,
   {
@@ -35,7 +37,7 @@ const pristine = new Pristine(offerForm,
   true
 );
 
-const capacityCheck = () => ROOMS_TO_GUESTS[roomElementValue].includes(capacityElementValue);
+const capacityCheck = () => ROOMS_TO_GUESTS[roomElement.value].includes(capacityElement.value);
 
 const onRoomNumberChange = () => {
   pristine.validate(capacityElement);
@@ -73,7 +75,7 @@ timeOutElement.addEventListener('change', onTimeOutChange);
 roomElement.addEventListener('change', onRoomNumberChange);
 capacityElement.addEventListener('change', onGuestsNumberChange);
 
-const priceCheck = () => priceELement.value <= HOUSING_TYPE_PRICE[typeELementValue];
+const priceCheck = () => priceELement.value <= HOUSING_TYPE_PRICE[typeElement.value];
 
 pristine.addValidator(
   priceELement,
@@ -82,7 +84,7 @@ pristine.addValidator(
 );
 
 const onTypeElementChange = function () {
-  priceELement.placeholder = HOUSING_TYPE_PRICE[typeELementValue];
+  priceELement.placeholder = HOUSING_TYPE_PRICE[typeElement.value];
 };
 
 typeElement.addEventListener('change', onTypeElementChange);
