@@ -73,13 +73,15 @@ roomElement.addEventListener('change', onRoomNumberChange);
 capacityElement.addEventListener('change', onGuestsNumberChange);
 
 // Проверка цены в зависимости от выбранного типа жилья
-const priceCheck = () => priceELement.value <= HOUSING_TYPE_PRICE[typeElement.value];
+const priceCheck = () => priceELement.value >= HOUSING_TYPE_PRICE[typeElement.value];
 
 pristine.addValidator(
   priceELement,
   priceCheck,
   'Стоимость должна быть выше'
 );
+
+priceELement.addEventListener('change', priceCheck);
 
 const onTypeElementChange = function () {
   priceELement.placeholder = HOUSING_TYPE_PRICE[typeElement.value];
