@@ -6,11 +6,11 @@ const ROOMS_TO_GUESTS = {
 };
 
 const HOUSING_TYPE_PRICE = {
-  bungalow: '0',
-  flat: '1000',
-  hotel: '3000',
-  house: '5000',
-  palace: '10000'
+  bungalow: 0,
+  flat: 1000,
+  hotel: 3000,
+  house: 5000,
+  palace: 10000
 };
 
 const offerForm = document.querySelector('.ad-form');
@@ -19,6 +19,7 @@ const roomElement = offerForm.querySelector('#room_number');
 const timeInElement = offerForm.querySelector('#timein');
 const timeOutElement = offerForm.querySelector('#timeout');
 const priceElement = offerForm.querySelector('#price');
+priceElement.placeholder = '1000';
 const typeElement = offerForm.querySelector('#type');
 
 // Добавляем экземпляр Pristine. Из материалов и объяснений Академии, я так и не понял, что такое new и экземпляр. Я вижу это просто как какую-то инизиализацию скрипта, где мы добавляем на него ссылку и передаём объект настроек.
@@ -80,19 +81,21 @@ timeInElement.addEventListener('change', onTimeInChange);
 timeOutElement.addEventListener('change', onTimeOutChange);
 
 // Проверка цены в зависимости от выбранного типа жилья
-const priceCheck = () => priceElement.value >= HOUSING_TYPE_PRICE[typeElement.value];
+const priceCheck = (value) => Number.parseInt(value, 10) >= HOUSING_TYPE_PRICE[typeElement.value];
+
+const getPriceErrorMessage = () => `Стоимость должна быть выше ${HOUSING_TYPE_PRICE[typeElement.value]}`;
 
 // Снова сообщаю валидатору, что хочу проверять элемент цены по особым правилам. Передаю функцию.
 pristine.addValidator(
   priceElement,
   priceCheck,
-  'Стоимость должна быть выше'
+  getPriceErrorMessage
 );
 
 // Функция, которая валидирует элемент цены.
 const onPriceCheck = () => pristine.validate(priceElement);
 
-priceElement.addEventListener('input', onPriceCheck);
+priceElement.addEventListener('change', onPriceCheck);
 typeElement.addEventListener('change', onPriceCheck);
 
 const onTypeElementChange = function () {
