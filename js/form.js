@@ -14,16 +14,11 @@ const HOUSING_TYPE_PRICE = {
 };
 
 const offerForm = document.querySelector('.ad-form');
-
 const capacityElement = offerForm.querySelector('#capacity');
-
 const roomElement = offerForm.querySelector('#room_number');
-
 const timeInElement = offerForm.querySelector('#timein');
 const timeOutElement = offerForm.querySelector('#timeout');
-
 const priceELement = offerForm.querySelector('#price');
-
 const typeElement = offerForm.querySelector('#type');
 
 const pristine = new Pristine(offerForm,
@@ -37,6 +32,7 @@ const pristine = new Pristine(offerForm,
   true
 );
 
+// Проверка количества комнат и количества гостей
 const capacityCheck = () => ROOMS_TO_GUESTS[roomElement.value].includes(capacityElement.value);
 
 const onRoomNumberChange = () => {
@@ -61,6 +57,7 @@ pristine.addValidator(
   'Для такого количества гостей нужно больше комнат'
 );
 
+// Изменение времени заселения и выселения
 const onTimeInChange = function () {
   timeOutElement.value = timeInElement.value;
 };
@@ -75,6 +72,7 @@ timeOutElement.addEventListener('change', onTimeOutChange);
 roomElement.addEventListener('change', onRoomNumberChange);
 capacityElement.addEventListener('change', onGuestsNumberChange);
 
+// Проверка цены в зависимости от выбранного типа жилья
 const priceCheck = () => priceELement.value <= HOUSING_TYPE_PRICE[typeElement.value];
 
 pristine.addValidator(
