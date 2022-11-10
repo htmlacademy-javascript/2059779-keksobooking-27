@@ -92,7 +92,7 @@ pristine.addValidator(
 // Функция, которая валидирует элемент цены.
 const onPriceCheck = () => pristine.validate(priceElement);
 
-priceElement.addEventListener('change', onPriceCheck);
+priceElement.addEventListener('input', onPriceCheck);
 typeElement.addEventListener('change', onPriceCheck);
 
 const onTypeElementChange = function () {
