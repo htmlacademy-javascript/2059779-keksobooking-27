@@ -26,8 +26,8 @@ const roomElement = offerForm.querySelector('#room_number');
 const timeInElement = offerForm.querySelector('#timein');
 const timeOutElement = offerForm.querySelector('#timeout');
 const priceElement = offerForm.querySelector('#price');
-priceElement.placeholder = '1000';
 const typeElement = offerForm.querySelector('#type');
+priceElement.placeholder = HOUSING_TYPE_PRICE[typeElement.value];
 
 // Добавляем экземпляр Pristine. Из материалов и объяснений Академии, я так и не понял, что такое new и экземпляр. Я вижу это просто как какую-то инизиализацию скрипта, где мы добавляем на него ссылку и передаём объект настроек.
 const pristine = new Pristine(offerForm,
