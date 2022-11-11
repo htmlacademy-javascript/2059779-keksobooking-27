@@ -1,17 +1,18 @@
-const fieldsets = document.querySelectorAll('fieldset');
+const adForm = document.querySelector('.ad-form');
+const fieldsets = adForm.querySelectorAll('fieldset');
 
 const turnFormOff = () => {
   fieldsets.forEach((fieldset) => {
     fieldset.disabled = true;
-    fieldset.classList.add(`${fieldset.classList[0]}--disabled`);
   });
+  adForm.classList.add(`${adForm.classList[0]}--disabled`);
 };
 
 const turnFormOn = () => {
   fieldsets.forEach((fieldset) => {
     fieldset.disabled = false;
-    fieldset.classList.remove(`${fieldset.classList[0]}--disabled`);
   });
+  adForm.classList.remove(`${adForm.classList[0]}--disabled`);
 };
 
 export { turnFormOff, turnFormOn };
