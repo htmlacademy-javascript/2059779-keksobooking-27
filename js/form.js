@@ -84,11 +84,11 @@ roomElement.addEventListener('change', onRoomNumberChange);
 capacityElement.addEventListener('change', onGuestsNumberChange);
 
 // Изменение времени заселения и выселения
-const onTimeInChange = function () {
+const onTimeInChange = () => {
   timeOutElement.value = timeInElement.value;
 };
 
-const onTimeOutChange = function () {
+const onTimeOutChange = () => {
   timeInElement.value = timeOutElement.value;
 };
 
@@ -114,7 +114,7 @@ const onPriceCheck = () => pristine.validate(priceElement);
 priceElement.addEventListener('change', onPriceCheck);
 typeElement.addEventListener('change', onPriceCheck);
 
-const onTypeElementChange = function () {
+const onTypeElementChange = () => {
   priceElement.placeholder = HOUSING_TYPE_PRICE[typeElement.value];
 };
 
