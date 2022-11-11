@@ -17,7 +17,7 @@ const mainPinIcon = L.icon({
   iconAnchor: [26, 52],
 });
 
-const marker = L.marker(
+const mainPinMarker = L.marker(
   {
     lat: 35.683171,
     lng: 139.753143
@@ -28,4 +28,11 @@ const marker = L.marker(
   },
 );
 
-marker.addTo(map);
+mainPinMarker.addTo(map);
+
+const addressElement = document.querySelector('#address');
+addressElement.value = mainPinMarker.getLatLng();
+
+mainPinMarker.on('move', (evt) => {
+  addressElement.value = evt.target.getLatLng(); // Не понятно. Метод мне возвращает координаты зачем-то с припиской LatLng перед числами.
+});
