@@ -8,16 +8,16 @@ const HOUSING_TYPES_TITLES = {
   hotel: 'Отель'
 };
 
-const mapCanvas = document.querySelector('#map-canvas'); /** Наверное потом этой переменной нужно будет задать имя popup и другой селектор */
+const mapCanvas = document.querySelector('#map-canvas');
 const offerTemplate = document.querySelector('#card')
   .content
   .querySelector('.popup');
 
 const markupOffers = (offersData) => {
-  const { author, offer } = offersData[0];
+  const { author, offer } = offersData;
 
   const offerELement = offerTemplate.cloneNode(true);
-  offerELement.querySelector('.popup__title').textContent = offer.title; /** Посмотрел в ТЗ обязательные поля. Их нет смысла проверять. Или как минимум удалять. */
+  offerELement.querySelector('.popup__title').textContent = offer.title;
   offerELement.querySelector('.popup__text--address').textContent = offer.address;
   offerELement.querySelector('.popup__text--price').textContent = `${offer.price} ₽/ночь`;
   offerELement.querySelector('.popup__type').textContent = HOUSING_TYPES_TITLES[offer.type];
@@ -48,7 +48,7 @@ const markupOffers = (offersData) => {
   photosContainer.innerHTML = '';
   if (offer.photos && offer.photos.length) {
     offer.photos.forEach((photo) => {
-      photoElement.src = photo; /** Я видел, как другие студенты добавляют в alt текст заголовок объявления. Я с этим не согласен. Считаю, что лучше сюда подойдёт шаблонная фраза "Фотография жилья". */
+      photoElement.src = photo;
       photosContainer.append(photoElement.cloneNode(false));
     });
   }

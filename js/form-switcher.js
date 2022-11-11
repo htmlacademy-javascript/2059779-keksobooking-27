@@ -1,19 +1,18 @@
-const turnFormOff = (form) => {
-  const formElement = document.querySelector(`${form}`);
-  const formChildren = formElement.children;
-  formElement.classList.add(`${formElement.classList[0]}--disabled`);
-  for (const child of formChildren) {
-    child.disabled = true;
-  }
+const adForm = document.querySelector('.ad-form');
+const fieldsets = adForm.querySelectorAll('fieldset');
+
+const turnFormOff = () => {
+  fieldsets.forEach((fieldset) => {
+    fieldset.disabled = true;
+  });
+  adForm.classList.add(`${adForm.classList[0]}--disabled`);
 };
 
-const turnFormOn = (form) => {
-  const formElement = document.querySelector(`${form}`);
-  const formChildren = formElement.children;
-  formElement.classList.remove(`${formElement.classList[0]}--disabled`);
-  for (const child of formChildren) {
-    child.disabled = false;
-  }
+const turnFormOn = () => {
+  fieldsets.forEach((fieldset) => {
+    fieldset.disabled = false;
+  });
+  adForm.classList.remove(`${adForm.classList[0]}--disabled`);
 };
 
 export { turnFormOff, turnFormOn };
