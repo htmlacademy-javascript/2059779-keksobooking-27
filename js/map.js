@@ -1,3 +1,5 @@
+import { createOfferElement } from './popup.js';
+
 const START_COORDINATES = {
   startLat: 35.683171,
   startLng: 139.753143
@@ -38,6 +40,12 @@ const mainPinMarker = L.marker(
   },
 );
 
+const commonPinIcon = L.icon({
+  iconUrl: './img/pin.svg',
+  iconSize: [52, 52],
+  iconAnchor: [26, 52],
+});
+
 const setMainPinMarker = () => mainPinMarker.addTo(map);
 
 const setStartAddress = () => {
@@ -52,6 +60,21 @@ const setAddressOnPinMove = () => {
   });
 };
 
+const setOfferPinMarker = (offers) => {
+  offers.forEach((offer) => {
+    const offerMarker = L.marker(
+      {
+        lat: offer.location.lat,
+        lng: offer.location.lng
+      },
+      {
+        icon: commonPinIcon
+      }
+    );
+    offerMarker.addTo(map).bindPopup(createOfferElement);
+  });
+};
+
 const setOnMapLoad = (cb) => map.on('load', cb);
 
-export { setMap, setMainPinMarker, setStartAddress, setAddressOnPinMove, setOnMapLoad };
+export { setMap, setMainPinMarker, setStartAddress, setAddressOnPinMove, setOnMapLoad, setOfferPinMarker };

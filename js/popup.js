@@ -12,7 +12,7 @@ const offerTemplate = document.querySelector('#card')
   .content
   .querySelector('.popup');
 
-const markupOffers = (offersData) => {
+const createOfferElement = (offersData) => {
   const { author, offer } = offersData;
 
   const offerELement = offerTemplate.cloneNode(true);
@@ -58,4 +58,4 @@ const markupOffers = (offersData) => {
     offerELement.querySelector('.popup__avatar').remove();
   }
 };
-export { markupOffers };
+export { createOfferElement };
