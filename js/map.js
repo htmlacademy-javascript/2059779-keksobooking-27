@@ -41,3 +41,5 @@ mainPinMarker.on('move', (evt) => {
   const { lat, lng } = evt.target.getLatLng();
   addressElement.value = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
 });
+
+const setOnMapLoad = (cb) => map.on('load', cb);
