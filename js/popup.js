@@ -57,5 +57,6 @@ const createOfferElement = (offersData) => {
   } else {
     offerELement.querySelector('.popup__avatar').remove();
   }
+  return offerELement;
 };
 export { createOfferElement };

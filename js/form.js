@@ -26,6 +26,7 @@ const roomElement = offerForm.querySelector('#room_number');
 const timeInElement = offerForm.querySelector('#timein');
 const timeOutElement = offerForm.querySelector('#timeout');
 const priceElement = offerForm.querySelector('#price');
+const priceSliderElement = offerForm.querySelector('.ad-form__slider');
 const typeElement = offerForm.querySelector('#type');
 priceElement.placeholder = HOUSING_TYPE_PRICE[typeElement.value];
 
@@ -122,4 +123,19 @@ typeElement.addEventListener('change', onTypeElementChange);
 
 offerForm.addEventListener('submit', (evt) => {
   if (!pristine.validate()) { evt.preventDefault(); }
+});
+
+// Слайдер для инпута с ценой
+noUiSlider.create(priceSliderElement, {
+  range: {
+    min: 0,
+    max: 10000,
+  },
+  start: 1000,
+  step: 1000,
+  connect: 'lower',
+});
+
+priceSliderElement.noUiSlider.on('update', () => {
+  priceElement.value = priceSliderElement.noUIiSlider.get(); // Всё как в примере, а консоль сыпет ошибкой undefined
 });

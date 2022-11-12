@@ -61,11 +61,11 @@ const setAddressOnPinMove = () => {
 };
 
 const setOfferPinMarker = (offers) => {
-  offers.forEach((offer) => {
+  offers.forEach(({location}) => {
     const offerMarker = L.marker(
       {
-        lat: offer.location.lat,
-        lng: offer.location.lng
+        lat: location.lat,
+        lng: location.lng
       },
       {
         icon: commonPinIcon
