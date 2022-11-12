@@ -1,15 +1,25 @@
-const map = L.map('map-canvas')
-  .setView({
-    lat: 35.683171,
-    lng: 139.753143
-  }, 12);
+const START_COORDINATES = {
+  startLat: 35.683171,
+  startLng: 139.753143
+};
+const START_ZOOM = 12;
 
-L.tileLayer(
-  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-  },
-).addTo(map);
+const map = L.map('map-canvas');
+const addressElement = document.querySelector('#address');
+
+const setMap = () => {
+  map.setView({
+    lat: START_COORDINATES.startLat,
+    lng: START_COORDINATES.startLng
+  }, START_ZOOM);
+
+  L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    },
+  ).addTo(map);
+};
 
 const mainPinIcon = L.icon({
   iconUrl: './img/main-pin.svg',
@@ -19,8 +29,8 @@ const mainPinIcon = L.icon({
 
 const mainPinMarker = L.marker(
   {
-    lat: 35.683171,
-    lng: 139.753143
+    lat: START_COORDINATES.startLat,
+    lng: START_COORDINATES.startLng
   },
   {
     draggable: true,
@@ -28,18 +38,20 @@ const mainPinMarker = L.marker(
   },
 );
 
-mainPinMarker.addTo(map);
+const setMainPinMarker = () => mainPinMarker.addTo(map);
 
-const addressElement = document.querySelector('#address');
 const setStartAddress = () => {
   const { lat, lng } = mainPinMarker.getLatLng();
   addressElement.value = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
 };
-setStartAddress();
 
-mainPinMarker.on('move', (evt) => {
-  const { lat, lng } = evt.target.getLatLng();
-  addressElement.value = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
-});
+const setAddressOnPinMove = () => {
+  mainPinMarker.on('move', (evt) => {
+    const { lat, lng } = evt.target.getLatLng();
+    addressElement.value = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+  });
+};
 
 const setOnMapLoad = (cb) => map.on('load', cb);
+
+export { setMap, setMainPinMarker, setStartAddress, setAddressOnPinMove, setOnMapLoad };
