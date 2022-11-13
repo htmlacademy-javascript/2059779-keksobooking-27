@@ -12,6 +12,8 @@ const GUESTS_TO_ROOMS = {
   0: ['100 комнат']
 };
 
+const MAX_PRICE = 100000;
+
 const HOUSING_TYPE_PRICE = {
   bungalow: 0,
   flat: 1000,
@@ -129,17 +131,17 @@ offerForm.addEventListener('submit', (evt) => {
 noUiSlider.create(priceSliderElement, {
   range: {
     min: 0,
-    max: 100000,
+    max: MAX_PRICE,
   },
   start: 1000,
   step: 500,
   connect: 'lower',
   format: {
     to: function (value) {
-      return parseFloat(value);
+      return parseInt(value, 10);
     },
     from: function (value) {
-      return parseFloat(value);
+      return parseInt(value, 10);
     },
   }
 });
@@ -154,3 +156,16 @@ const onPriceChange = () => {
 };
 
 priceElement.addEventListener('input', onPriceChange);
+
+const onTypeElementChangeSlider = () => {
+  priceSliderElement.noUiSlider.updateOptions({
+    range: {
+      min: HOUSING_TYPE_PRICE[typeElement.value],
+      max: MAX_PRICE
+    },
+    start: HOUSING_TYPE_PRICE[typeElement.value],
+    step: 500
+  });
+};
+
+typeElement.addEventListener('change', onTypeElementChangeSlider);
