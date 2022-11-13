@@ -136,6 +136,11 @@ noUiSlider.create(priceSliderElement, {
   connect: 'lower',
 });
 
+priceSliderElement.noUiSlider.on('update', () => {
+  priceElement.value = priceSliderElement.noUiSlider.get();
+});
+
+
 // priceSliderElement.noUiSlider.on('update', () => {
 //   priceElement.value = priceSliderElement.noUIiSlider.get(); // Всё как в примере, а консоль сыпет ошибкой undefined
 // });
