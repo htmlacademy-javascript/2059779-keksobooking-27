@@ -61,17 +61,17 @@ const setAddressOnPinMove = () => {
 };
 
 const setOfferPinMarker = (offers) => {
-  offers.forEach(({location}) => {
+  offers.forEach((offer) => {
     const offerMarker = L.marker(
       {
-        lat: location.lat,
-        lng: location.lng
+        lat: offer.location.lat,
+        lng: offer.location.lng
       },
       {
         icon: commonPinIcon
       }
     );
-    offerMarker.addTo(map).bindPopup(createOfferElement);
+    offerMarker.addTo(map).bindPopup(createOfferElement(offer));
   });
 };
 
