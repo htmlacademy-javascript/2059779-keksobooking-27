@@ -160,12 +160,13 @@ priceElement.addEventListener('input', onPriceChange);
 const onTypeElementChangeSlider = () => {
   priceSliderElement.noUiSlider.updateOptions({
     range: {
-      min: HOUSING_TYPE_PRICE[typeElement.value],
+      min: HOUSING_TYPE_PRICE[typeElement.value], // Что-то я не уверен, что нужно так делать. При смене значения в селекте, ручка на слайдере туда-сюда ползает. Может вообще не нужно обновлять настройки слайдера?
       max: MAX_PRICE
     },
     start: HOUSING_TYPE_PRICE[typeElement.value],
     step: 500
   });
+  priceSliderElement.noUiSlider.set(priceElement.value);
 };
 
 typeElement.addEventListener('change', onTypeElementChangeSlider);
