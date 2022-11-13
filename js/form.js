@@ -129,18 +129,28 @@ offerForm.addEventListener('submit', (evt) => {
 noUiSlider.create(priceSliderElement, {
   range: {
     min: 0,
-    max: 10000,
+    max: 100000,
   },
   start: 1000,
-  step: 1000,
+  step: 500,
   connect: 'lower',
+  format: {
+    to: function (value) {
+      return parseFloat(value);
+    },
+    from: function (value) {
+      return parseFloat(value);
+    },
+  }
 });
 
-priceSliderElement.noUiSlider.on('update', () => {
+priceSliderElement.noUiSlider.on('slide', () => {
   priceElement.value = priceSliderElement.noUiSlider.get();
+  pristine.validate(priceElement);
 });
 
+const onPriceChange = () => {
+  priceSliderElement.noUiSlider.set(priceElement.value);
+};
 
-// priceSliderElement.noUiSlider.on('update', () => {
-//   priceElement.value = priceSliderElement.noUIiSlider.get(); // Всё как в примере, а консоль сыпет ошибкой undefined
-// });
+priceElement.addEventListener('input', onPriceChange);
