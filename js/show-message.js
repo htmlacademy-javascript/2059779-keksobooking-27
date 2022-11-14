@@ -8,7 +8,7 @@ const errorMessageTemplate = bodyElement.querySelector('#error')
 
 const hideMessage = () => {
   const messageElement = bodyElement.querySelector('.success') || bodyElement.querySelector('.error');
-  messageElement.remove();
+  messageElement.remove(); //Вообще не знаю, насколько это нужно. У кнопки стоит атрибут type=reset. Браузер и сам прекрасно справляется.
   bodyElement.style.overflow = 'auto';
 };
 
