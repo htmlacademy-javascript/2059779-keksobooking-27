@@ -1,4 +1,4 @@
-import { setStartAddress, setMainPinMarker } from './map.js'; //Утянул сюда. Иначе в main придётся по идее закидывать стартовые координаты. А должны ли они там быть?
+import { setStartAddress, resetMap } from './map.js'; //Утянул сюда. Иначе в main придётся по идее закидывать стартовые координаты. А должны ли они там быть?
 
 const ROOMS_TO_GUESTS = {
   1: ['1'],
@@ -54,6 +54,7 @@ const turnOfferFormOn = () => {
   offerForm.classList.remove(`${offerForm.classList[0]}--disabled`);
 };
 
+//Переключение состояния фильтров
 const turnFilterFormOff = () => {
   filterFormFieldsets.forEach((fieldset) => {
     fieldset.disabled = true;
@@ -68,6 +69,7 @@ const turnFilterFormOn = () => {
   filterForm.classList.remove(`${filterForm.classList[0]}--disabled`);
 };
 
+//Валидация
 const pristine = new Pristine(offerForm,
   {
     classTo: 'ad-form__element',
@@ -204,12 +206,11 @@ const onResetButton = () => {
 formResetButton.addEventListener('click', (evt) => {
   evt.preventDefault(); //Я не уверен, что нужно скидывать, потому что кнопка с типом ресет свою форму прекрасно скидывает.
   onResetButton();
-  setMainPinMarker(); //Не работает
+  resetMap();
   setStartAddress(); //И не работает. Я не понимаю, что я делаю не так.
 });
 
 //Отправка формы
-
 const blockSubmitButton = () => {
   formSubmitButton.disabled = true;
   formSubmitButton.textContent = 'Публикация...';
@@ -230,6 +231,5 @@ const setOnOfferFormSubmit = (cb) => {
     }
   });
 };
-
 
 export { turnOfferFormOff, turnOfferFormOn, turnFilterFormOff, turnFilterFormOn, setOnOfferFormSubmit };

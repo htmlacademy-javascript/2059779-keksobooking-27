@@ -83,4 +83,15 @@ const mapInit = () => {
   setAddressOnPinMove();
 };
 
-export { mapInit, setStartAddress, setOnMapLoad, setMainPinMarker, setOfferPinMarker };
+const resetMap = () => {
+  map.setView({
+    lat: START_COORDINATE.startLat,
+    lng: START_COORDINATE.startLng
+  }, START_ZOOM);
+  mainPinMarker.setLatLng({
+    lat: START_COORDINATE.startLat,
+    lng: START_COORDINATE.startLng
+  });
+};
+
+export { mapInit, setStartAddress, setOnMapLoad, setMainPinMarker, setOfferPinMarker, resetMap };
