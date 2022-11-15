@@ -1,6 +1,5 @@
 import { generateRandomOffers } from './mockup.js';
-import { turnAdFormOff, turnAdFormOn } from './form-switcher.js';
-import './form.js';
+import { turnAdFormOff, turnAdFormOn, } from './form.js';
 import { mapInit, setStartAddress, setOnMapLoad, } from './map.js';
 
 const OFFERS_COUNT = 10;

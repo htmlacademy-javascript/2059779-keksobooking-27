@@ -22,7 +22,11 @@ const HOUSING_TYPE_PRICE = {
   palace: 10000
 };
 
+const filterForm = document.querySelector('.map__filters');
+const filterFormFieldsets = filterForm.querySelector('fieldset');
 const offerForm = document.querySelector('.ad-form');
+const offerFormFieldsets = offerForm.querySelectorAll('fieldset');
+const formResetButton = offerForm.querySelector('.ad-form__reset');
 const capacityElement = offerForm.querySelector('#capacity');
 const roomElement = offerForm.querySelector('#room_number');
 const timeInElement = offerForm.querySelector('#timein');
@@ -31,6 +35,35 @@ const priceElement = offerForm.querySelector('#price');
 const priceSliderElement = offerForm.querySelector('.ad-form__slider');
 const typeElement = offerForm.querySelector('#type');
 priceElement.placeholder = HOUSING_TYPE_PRICE[typeElement.value];
+
+//Переключение состояния формы
+const turnAdFormOff = () => {
+  offerFormFieldsets.forEach((fieldset) => {
+    fieldset.disabled = true;
+  });
+  offerForm.classList.add(`${offerForm.classList[0]}--disabled`);
+};
+
+const turnAdFormOn = () => {
+  offerFormFieldsets.forEach((fieldset) => {
+    fieldset.disabled = false;
+  });
+  offerForm.classList.remove(`${offerForm.classList[0]}--disabled`);
+};
+
+const turnFilterFormOff = () => {
+  filterFormFieldsets.forEach((fieldset) => {
+    fieldset.disabled = true;
+  });
+  filterForm.classList.add(`${filterForm.classList[0]}--disabled`);
+};
+
+const turnFilterFormOn = () => {
+  filterFormFieldsets.forEach((fieldset) => {
+    fieldset.disabled = false;
+  });
+  filterForm.classList.remove(`${filterForm.classList[0]}--disabled`);
+};
 
 // Добавляем экземпляр Pristine. Из материалов и объяснений Академии, я так и не понял, что такое new и экземпляр. Я вижу это просто как какую-то инизиализацию скрипта, где мы добавляем на него ссылку и передаём объект настроек.
 const pristine = new Pristine(offerForm,
@@ -170,3 +203,19 @@ const onTypeElementChangeSlider = () => {
 };
 
 typeElement.addEventListener('change', onTypeElementChangeSlider);
+
+//Сброс формы
+
+const onResetButton = () => {
+  offerForm.reset();
+  filterForm.reset();
+  priceSliderElement.noUiSlider.reset();
+};
+
+formResetButton.addEventListener('click', (evt) => {
+  evt.preventDefault(); //Я не уверен, что нужно скидывать, потому что кнопка с типом ресет свою форму прекрасно скидывает.
+  onResetButton(); //Сбрасывает поле "Адрес" в ноль. Я пытался передать сюда коллбеком в main функцию "setStartAddress", но ничего не вышло. Просто не работает. А в консоли мессаг нет.
+});
+
+
+export { turnAdFormOff, turnAdFormOn, turnFilterFormOff, turnFilterFormOn };
