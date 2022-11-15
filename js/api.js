@@ -16,13 +16,13 @@ const getData = async (onSuccess, onFail) => {
   }
 };
 
-const sendData = async (onSuccess, onFail, data) => {
+const sendData = async (onSuccess, onFail, body) => {
   try {
     const response = await fetch(
       'https://27.javascript.pages.academy/keksobooking',
       {
         method: 'POST',
-        data
+        body
       }
     );
 

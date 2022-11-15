@@ -225,7 +225,7 @@ const unblockSubmitButton = () => {
 const setOnOfferFormSubmit = (cb) => {
   offerForm.addEventListener('submit', async (evt) => {
     evt.preventDefault();
-    if (!pristine.validate()) {
+    if (pristine.validate()) {
       blockSubmitButton();
       await cb(new FormData(evt.target));
       unblockSubmitButton();
