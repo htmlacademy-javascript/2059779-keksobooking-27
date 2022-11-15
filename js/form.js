@@ -197,7 +197,7 @@ const onTypeElementChangeSlider = () => {
 typeElement.addEventListener('change', onTypeElementChangeSlider);
 
 //Сброс формы
-const onResetButton = () => {
+const onFormReset = () => {
   offerForm.reset();
   filterForm.reset();
   priceSliderElement.noUiSlider.reset();
@@ -205,7 +205,7 @@ const onResetButton = () => {
 
 formResetButton.addEventListener('click', (evt) => {
   evt.preventDefault(); //Я не уверен, что нужно скидывать, потому что кнопка с типом ресет свою форму прекрасно скидывает.
-  onResetButton();
+  onFormReset();
   pristine.reset();
   resetMap();
   setStartAddress();
@@ -233,4 +233,4 @@ const setOnOfferFormSubmit = (cb) => {
   });
 };
 
-export { turnOfferFormOff, turnOfferFormOn, turnFilterFormOff, turnFilterFormOn, setOnOfferFormSubmit };
+export { turnOfferFormOff, turnOfferFormOn, turnFilterFormOff, turnFilterFormOn, setOnOfferFormSubmit, onFormReset };

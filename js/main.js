@@ -1,4 +1,4 @@
-import { turnOfferFormOff, turnOfferFormOn, turnFilterFormOn, turnFilterFormOff, setOnOfferFormSubmit } from './form.js';
+import { turnOfferFormOff, turnOfferFormOn, turnFilterFormOn, turnFilterFormOff, setOnOfferFormSubmit, onFormReset } from './form.js';
 import { mapInit, setStartAddress, setOnMapLoad, setOfferPinMarker, resetMap } from './map.js';
 import { getData, sendData } from './api.js';
 import { showSuccessMessage, showErrorMessage, showAlertMessage } from './show-message.js';
@@ -17,6 +17,7 @@ const onGetDataSuccess = (offers) => {
 const onSendDataSuccess = () => {
   showSuccessMessage();
   resetMap();
+  onFormReset();
   setStartAddress();
 };
 
