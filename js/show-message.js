@@ -50,5 +50,4 @@ const showAlertMessage = (message) => {
   }, 2000);
 };
 
-
 export { showSuccessMessage, showErrorMessage, showAlertMessage };
