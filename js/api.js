@@ -1,19 +1,16 @@
-const FAIL_TEXT = 'Не удалось отправить данные. Попробуйте ещё раз через некоторое время.';
-
-const getData = async () => {
-  await fetch('https://27.javascript.pages.academy/keksobooking/data');
-};
-
-const sendData = async (onFail, body) => {
+const getData = async (onSuccess, onFail) => {
   try {
-    await fetch('https://27.javascript.pages.academy/keksobooking',
-      {
-        method: 'POST',
-        body,
-      });
+    const response = await fetch('https://27.javascript.pages.academy/keksobooking/data');
+
+    if (!response.ok) {
+      throw new Error('Не удалось загрузить объявления');
+    }
+
+    const offers = await response.json();
+    onSuccess(offers);
   } catch (error) {
-    onFail(FAIL_TEXT);
+    onFail(error.message);
   }
 };
 
-export { getData, sendData };
+export { getData};

@@ -1,12 +1,16 @@
-import { generateRandomOffers } from './mockup.js';
 import { turnAdFormOff, turnAdFormOn, } from './form.js';
-import { mapInit, setStartAddress, setOnMapLoad, } from './map.js';
+import { mapInit, setStartAddress, setOnMapLoad, setOfferPinMarker } from './map.js';
+import { getData } from './api.js';
 
 const OFFERS_COUNT = 10;
 
-const similarOffers = generateRandomOffers(OFFERS_COUNT);
-
 turnAdFormOff();
-mapInit(similarOffers);
+mapInit();
+
+const onGetDataSuccess = (offers) => {
+  setOfferPinMarker(offers.slice(0, OFFERS_COUNT));
+};
+
 setOnMapLoad(turnAdFormOn());
+getData(onGetDataSuccess);
 setStartAddress();

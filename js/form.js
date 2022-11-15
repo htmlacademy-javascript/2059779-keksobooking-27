@@ -1,3 +1,5 @@
+import { setStartAddress, setMainPinMarker } from './map.js'; //Утянул сюда. Иначе в main придётся по идее закидывать стартовые координаты. А должны ли они там быть?
+
 const ROOMS_TO_GUESTS = {
   1: ['1'],
   2: ['1', '2'],
@@ -214,7 +216,9 @@ const onResetButton = () => {
 
 formResetButton.addEventListener('click', (evt) => {
   evt.preventDefault(); //Я не уверен, что нужно скидывать, потому что кнопка с типом ресет свою форму прекрасно скидывает.
-  onResetButton(); //Сбрасывает поле "Адрес" в ноль. Я пытался передать сюда коллбеком в main функцию "setStartAddress", но ничего не вышло. Просто не работает. А в консоли мессаг нет.
+  onResetButton();
+  setMainPinMarker(); //Не работает
+  setStartAddress(); //И не работает. Я не понимаю, что я делаю не так.
 });
 
 

@@ -1,6 +1,6 @@
 import { createOfferElement } from './popup.js';
 
-const START_COORDINATES = {
+const START_COORDINATE = {
   startLat: 35.683171,
   startLng: 139.753143
 };
@@ -11,8 +11,8 @@ const addressElement = document.querySelector('#address');
 
 const setMap = () => {
   map.setView({
-    lat: START_COORDINATES.startLat,
-    lng: START_COORDINATES.startLng
+    lat: START_COORDINATE.startLat,
+    lng: START_COORDINATE.startLng
   }, START_ZOOM);
 
   L.tileLayer(
@@ -31,8 +31,8 @@ const mainPinIcon = L.icon({
 
 const mainPinMarker = L.marker(
   {
-    lat: START_COORDINATES.startLat,
-    lng: START_COORDINATES.startLng
+    lat: START_COORDINATE.startLat,
+    lng: START_COORDINATE.startLng
   },
   {
     draggable: true,
@@ -77,11 +77,10 @@ const setOfferPinMarker = (offers) => {
 
 const setOnMapLoad = (cb) => map.on('load', cb);
 
-const mapInit = (offers) => {
+const mapInit = () => {
   setMap();
   setMainPinMarker();
   setAddressOnPinMove();
-  setOfferPinMarker(offers);
 };
 
-export { mapInit, setStartAddress, setOnMapLoad };
+export { mapInit, setStartAddress, setOnMapLoad, setMainPinMarker, setOfferPinMarker };
