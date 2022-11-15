@@ -8,12 +8,11 @@ const HOUSING_TYPES_TITLES = {
   hotel: 'Отель'
 };
 
-const mapCanvas = document.querySelector('#map-canvas');
 const offerTemplate = document.querySelector('#card')
   .content
   .querySelector('.popup');
 
-const markupOffers = (offersData) => {
+const createOfferElement = (offersData) => {
   const { author, offer } = offersData;
 
   const offerELement = offerTemplate.cloneNode(true);
@@ -58,8 +57,6 @@ const markupOffers = (offersData) => {
   } else {
     offerELement.querySelector('.popup__avatar').remove();
   }
-
-  mapCanvas.append(offerELement);
-
+  return offerELement;
 };
-export { markupOffers };
+export { createOfferElement };

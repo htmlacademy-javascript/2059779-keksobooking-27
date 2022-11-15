@@ -12,6 +12,8 @@ const GUESTS_TO_ROOMS = {
   0: ['100 комнат']
 };
 
+const MAX_PRICE = 100000;
+
 const HOUSING_TYPE_PRICE = {
   bungalow: 0,
   flat: 1000,
@@ -26,6 +28,7 @@ const roomElement = offerForm.querySelector('#room_number');
 const timeInElement = offerForm.querySelector('#timein');
 const timeOutElement = offerForm.querySelector('#timeout');
 const priceElement = offerForm.querySelector('#price');
+const priceSliderElement = offerForm.querySelector('.ad-form__slider');
 const typeElement = offerForm.querySelector('#type');
 priceElement.placeholder = HOUSING_TYPE_PRICE[typeElement.value];
 
@@ -123,3 +126,47 @@ typeElement.addEventListener('change', onTypeElementChange);
 offerForm.addEventListener('submit', (evt) => {
   if (!pristine.validate()) { evt.preventDefault(); }
 });
+
+// Слайдер для инпута с ценой
+noUiSlider.create(priceSliderElement, {
+  range: {
+    min: 0,
+    max: MAX_PRICE,
+  },
+  start: 1000,
+  step: 500,
+  connect: 'lower',
+  format: {
+    to: function (value) {
+      return parseInt(value, 10);
+    },
+    from: function (value) {
+      return parseInt(value, 10);
+    },
+  }
+});
+
+priceSliderElement.noUiSlider.on('slide', () => {
+  priceElement.value = priceSliderElement.noUiSlider.get();
+  pristine.validate(priceElement);
+});
+
+const onPriceChange = () => {
+  priceSliderElement.noUiSlider.set(priceElement.value);
+};
+
+priceElement.addEventListener('input', onPriceChange);
+
+const onTypeElementChangeSlider = () => {
+  priceSliderElement.noUiSlider.updateOptions({
+    range: {
+      min: HOUSING_TYPE_PRICE[typeElement.value], // Что-то я не уверен, что нужно так делать. При смене значения в селекте, ручка на слайдере туда-сюда ползает. Может вообще не нужно обновлять настройки слайдера?
+      max: MAX_PRICE
+    },
+    start: HOUSING_TYPE_PRICE[typeElement.value],
+    step: 500
+  });
+  priceSliderElement.noUiSlider.set(priceElement.value);
+};
+
+typeElement.addEventListener('change', onTypeElementChangeSlider);

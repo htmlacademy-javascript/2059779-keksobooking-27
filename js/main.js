@@ -1,12 +1,17 @@
 import { generateRandomOffers } from './mockup.js';
-import { markupOffers } from './popup.js';
 import { turnFormOff, turnFormOn } from './form-switcher.js';
 import './form.js';
-import './map.js';
-
-const similarOffers = generateRandomOffers(1);
-const offer = similarOffers[0];
-markupOffers(offer);
+import { setMap, setMainPinMarker, setStartAddress, setAddressOnPinMove, setOnMapLoad, setOfferPinMarker } from './map.js';
 
 turnFormOff();
-turnFormOn();
+setMap();
+setOnMapLoad(turnFormOn());
+setMainPinMarker();
+setStartAddress();
+setAddressOnPinMove();
+
+const similarOffers = generateRandomOffers(10);
+
+setOfferPinMarker(similarOffers);
+
+
