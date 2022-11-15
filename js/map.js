@@ -4,7 +4,7 @@ const START_COORDINATES = {
   startLat: 35.683171,
   startLng: 139.753143
 };
-const START_ZOOM = 12;
+const START_ZOOM = 13;
 
 const map = L.map('map-canvas');
 const addressElement = document.querySelector('#address');
@@ -77,4 +77,11 @@ const setOfferPinMarker = (offers) => {
 
 const setOnMapLoad = (cb) => map.on('load', cb);
 
-export { setMap, setMainPinMarker, setStartAddress, setAddressOnPinMove, setOnMapLoad, setOfferPinMarker };
+const mapInit = (offers) => {
+  setMap();
+  setMainPinMarker();
+  setAddressOnPinMove();
+  setOfferPinMarker(offers);
+};
+
+export { mapInit, setStartAddress, setOnMapLoad };
