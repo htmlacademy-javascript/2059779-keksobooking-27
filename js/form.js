@@ -206,8 +206,9 @@ const onResetButton = () => {
 formResetButton.addEventListener('click', (evt) => {
   evt.preventDefault(); //Я не уверен, что нужно скидывать, потому что кнопка с типом ресет свою форму прекрасно скидывает.
   onResetButton();
+  pristine.reset();
   resetMap();
-  setStartAddress(); //И не работает. Я не понимаю, что я делаю не так.
+  setStartAddress();
 });
 
 //Отправка формы
