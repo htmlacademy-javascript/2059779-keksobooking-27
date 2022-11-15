@@ -33,8 +33,8 @@ const showSuccessMessage = () => {
 
 const showErrorMessage = () => {
   const errorMessageElement = errorMessageTemplate.cloneNode(true);
-  document.removeEventListener('click', onPointerClick);
-  document.removeEventListener('keydown', onEscKeydown);
+  document.addEventListener('click', onPointerClick); //В объявлении об ошибке есть кнопка "Попробовать снова". По идее на неё нужно навешивать сабмит отправки формы? А сейчас она у меня закрывается просто из-за глобального слушателя клика.
+  document.addEventListener('keydown', onEscKeydown);
   bodyElement.append(errorMessageElement);
   bodyElement.style.overflow = 'hidden';
 };
