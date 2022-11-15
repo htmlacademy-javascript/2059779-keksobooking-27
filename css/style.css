@@ -1027,6 +1027,22 @@ fieldset {
   opacity: 0.6;
 }
 
+.alert {
+  position: absolute;
+  z-index: 1100;
+  top: 0;
+  right: 0;
+  left: 0;
+  margin: 0;
+  padding: 15px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 50px;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: #ff6d51;
+}
+
 .visually-hidden {
   position: absolute;
 

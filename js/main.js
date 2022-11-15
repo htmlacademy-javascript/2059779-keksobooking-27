@@ -1,6 +1,7 @@
 import { turnAdFormOff, turnAdFormOn, } from './form.js';
 import { mapInit, setStartAddress, setOnMapLoad, setOfferPinMarker } from './map.js';
 import { getData } from './api.js';
+import { showAlertMessage } from './show-message.js';
 
 const OFFERS_COUNT = 10;
 
@@ -12,5 +13,5 @@ const onGetDataSuccess = (offers) => {
 };
 
 setOnMapLoad(turnAdFormOn());
-getData(onGetDataSuccess);
+getData(onGetDataSuccess, showAlertMessage);
 setStartAddress();

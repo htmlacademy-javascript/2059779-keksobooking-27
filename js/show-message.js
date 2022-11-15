@@ -8,7 +8,7 @@ const errorMessageTemplate = bodyElement.querySelector('#error')
 
 const hideMessage = () => {
   const messageElement = bodyElement.querySelector('.success') || bodyElement.querySelector('.error');
-  messageElement.remove(); //Вообще не знаю, насколько это нужно. У кнопки стоит атрибут type=reset. Браузер и сам прекрасно справляется.
+  messageElement.remove();
   bodyElement.style.overflow = 'auto';
 };
 
@@ -39,4 +39,16 @@ const showErrorMessage = () => {
   bodyElement.style.overflow = 'hidden';
 };
 
-export { showSuccessMessage, showErrorMessage };
+const showAlertMessage = (message) => {
+  const alertElement = document.createElement('div');
+  alertElement.classList.add('alert');
+  alertElement.textContent = message;
+  document.body.append(alertElement);
+
+  setTimeout(() => {
+    alertElement.remove();
+  }, 2000);
+};
+
+
+export { showSuccessMessage, showErrorMessage, showAlertMessage };
