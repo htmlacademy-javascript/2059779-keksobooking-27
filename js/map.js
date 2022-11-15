@@ -84,6 +84,7 @@ const mapInit = () => {
 };
 
 const resetMap = () => {
+  map.closePopup();
   map.setView({
     lat: START_COORDINATE.startLat,
     lng: START_COORDINATE.startLng
