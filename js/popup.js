@@ -1,4 +1,4 @@
-import { nounDecline } from './nouns-declension.js';
+import { declineNoun } from './decline-noun.js';
 
 const HOUSING_TYPES_TITLES = {
   flat: 'Квартира',
@@ -20,7 +20,7 @@ const createOfferElement = (offersData) => {
   offerELement.querySelector('.popup__text--address').textContent = offer.address;
   offerELement.querySelector('.popup__text--price').textContent = `${offer.price} ₽/ночь`;
   offerELement.querySelector('.popup__type').textContent = HOUSING_TYPES_TITLES[offer.type];
-  offerELement.querySelector('.popup__text--capacity').textContent = `${offer.rooms} ${nounDecline(offer.rooms, ['комната', 'комнаты', 'комнат'])} для ${offer.guests} ${nounDecline(offer.guests, ['гостя', 'гостей', 'гостей'])}`;
+  offerELement.querySelector('.popup__text--capacity').textContent = `${offer.rooms} ${declineNoun(offer.rooms, ['комната', 'комнаты', 'комнат'])} для ${offer.guests} ${declineNoun(offer.guests, ['гостя', 'гостей', 'гостей'])}`;
   offerELement.querySelector('.popup__text--time').textContent = `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`;
 
   const featuresList = offerELement.querySelector('.popup__features');
