@@ -50,8 +50,7 @@ const commonPinIcon = L.icon({
 const setMainPinMarker = () => mainPinMarker.addTo(map);
 
 const setStartAddress = () => {
-  const { lat, lng } = mainPinMarker.getLatLng();
-  addressElement.value = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+  addressElement.value = `${START_COORDINATE.startLat}, ${START_COORDINATE.startLng}`;
 };
 
 const setAddressOnPinMove = () => {
@@ -76,7 +75,7 @@ const setOfferPinMarker = (offers) => {
   });
 };
 
-const setOnMapLoad = (cb) => map.on('load', cb);
+const setOnMapLoad = (cb) => map.on('load', cb());
 
 const mapInit = () => {
   setMap();

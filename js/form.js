@@ -1,4 +1,4 @@
-import { setStartAddress, resetMap } from './map.js';
+import { resetMap, setStartAddress } from './map.js';
 
 const ROOMS_TO_GUESTS = {
   1: ['1'],
