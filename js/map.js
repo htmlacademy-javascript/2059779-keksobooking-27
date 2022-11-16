@@ -8,6 +8,7 @@ const START_ZOOM = 13;
 
 const map = L.map('map-canvas');
 const addressElement = document.querySelector('#address');
+addressElement.readOnly = true;
 
 const setMap = () => {
   map.setView({
