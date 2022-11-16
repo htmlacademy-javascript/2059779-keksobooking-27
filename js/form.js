@@ -227,7 +227,7 @@ const setOnOfferFormSubmit = (cb) => {
     evt.preventDefault();
     if (pristine.validate()) {
       blockSubmitButton();
-      await cb(new FormData(evt.target));
+      await cb(new FormData(offerForm));
       unblockSubmitButton();
     }
   });
