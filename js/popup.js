@@ -56,6 +56,10 @@ const createOfferElement = (offersData) => {
     });
   }
 
+  if (!photosContainer.innerHTML) { //Удаляю родительский элемент фоток.
+    photosContainer.remove();
+  }
+
   if (author.avatar && author.avatar.length) {
     offerELement.querySelector('.popup__avatar').src = author.avatar;
   } else {
