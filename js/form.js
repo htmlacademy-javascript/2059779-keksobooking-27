@@ -1,4 +1,4 @@
-import { setStartAddress, resetMap } from './map.js'; //Утянул сюда. Иначе в main придётся по идее закидывать стартовые координаты. А должны ли они там быть?
+import { setStartAddress, resetMap } from './map.js';
 
 const ROOMS_TO_GUESTS = {
   1: ['1'],

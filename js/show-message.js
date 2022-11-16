@@ -12,7 +12,7 @@ const hideMessage = () => {
   bodyElement.style.overflow = 'auto';
 };
 
-const isEscKey = (evt) => evt.key === 'Escape'; // В ретро зачем-то добавляют такой код. || evt.key === 'Esc'; Но в MDN указан только Escape без вариантов. Код перенесу в utils после мерджа.
+const isEscKey = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
 const onPointerClick = () => hideMessage(); //Не знаю, удачное название или нет. В подкасте слышал про Pointer Events, которые объединяют в себе и клики и тапы. Указательный палец же тоже Pointer Finger.
 
