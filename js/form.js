@@ -36,6 +36,7 @@ const timeInElement = offerForm.querySelector('#timein');
 const timeOutElement = offerForm.querySelector('#timeout');
 const priceElement = offerForm.querySelector('#price');
 const priceSliderElement = offerForm.querySelector('.ad-form__slider');
+// const priceSliderHandleElement = document.querySelector('.noUi-handle'); Это ручка слайдера. Я хочу удалить у неё tabindex, когда форма заблокирована, но ничего не выходит. Элемент не ищется. Видимо, потому что создаётся скриптом тоже.
 const typeElement = offerForm.querySelector('#type');
 priceElement.placeholder = HOUSING_TYPE_PRICE[typeElement.value];
 
@@ -45,6 +46,7 @@ const turnOfferFormOff = () => {
     fieldset.disabled = true;
   });
   offerForm.classList.add(`${offerForm.classList[0]}--disabled`);
+  // priceSliderHandleElement.removeAttribute('tabindex');
 };
 
 const turnOfferFormOn = () => {
