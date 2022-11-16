@@ -1,8 +1,8 @@
 import { createOfferElement } from './popup.js';
 
 const START_COORDINATE = {
-  startLat: 35.683171,
-  startLng: 139.753143
+  lat: 35.683171,
+  lng: 139.753143
 };
 const START_ZOOM = 13;
 
@@ -12,8 +12,8 @@ addressElement.readOnly = true;
 
 const setMap = () => {
   map.setView({
-    lat: START_COORDINATE.startLat,
-    lng: START_COORDINATE.startLng
+    lat: START_COORDINATE.lat,
+    lng: START_COORDINATE.lng
   }, START_ZOOM);
 
   L.tileLayer(
@@ -32,8 +32,8 @@ const mainPinIcon = L.icon({
 
 const mainPinMarker = L.marker(
   {
-    lat: START_COORDINATE.startLat,
-    lng: START_COORDINATE.startLng
+    lat: START_COORDINATE.lat,
+    lng: START_COORDINATE.lng
   },
   {
     draggable: true,
@@ -50,7 +50,7 @@ const commonPinIcon = L.icon({
 const setMainPinMarker = () => mainPinMarker.addTo(map);
 
 const setStartAddress = () => {
-  addressElement.value = `${START_COORDINATE.startLat}, ${START_COORDINATE.startLng}`;
+  addressElement.value = `${START_COORDINATE.lat}, ${START_COORDINATE.lng}`;
 };
 
 const setAddressOnPinMove = () => {
@@ -86,12 +86,12 @@ const mapInit = () => {
 const resetMap = () => {
   map.closePopup();
   map.setView({
-    lat: START_COORDINATE.startLat,
-    lng: START_COORDINATE.startLng
+    lat: START_COORDINATE.lat,
+    lng: START_COORDINATE.lng
   }, START_ZOOM);
   mainPinMarker.setLatLng({
-    lat: START_COORDINATE.startLat,
-    lng: START_COORDINATE.startLng
+    lat: START_COORDINATE.lat,
+    lng: START_COORDINATE.lng
   });
 };
 
