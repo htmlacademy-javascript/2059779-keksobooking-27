@@ -203,8 +203,7 @@ const onFormReset = () => {
   priceSliderElement.noUiSlider.reset();
 };
 
-formResetButton.addEventListener('click', (evt) => {
-  evt.preventDefault(); //Я не уверен, что нужно скидывать, потому что кнопка с типом ресет свою форму прекрасно скидывает.
+formResetButton.addEventListener('click', () => {
   onFormReset();
   pristine.reset();
   resetMap();
