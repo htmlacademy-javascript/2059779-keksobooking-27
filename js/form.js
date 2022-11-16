@@ -1,3 +1,5 @@
+import { setStartAddress, resetMap } from './map.js'; //Утянул сюда. Иначе в main придётся по идее закидывать стартовые координаты. А должны ли они там быть?
+
 const ROOMS_TO_GUESTS = {
   1: ['1'],
   2: ['1', '2'],
@@ -22,7 +24,12 @@ const HOUSING_TYPE_PRICE = {
   palace: 10000
 };
 
+const filterForm = document.querySelector('.map__filters');
+const filterFormFieldsets = filterForm.querySelectorAll('fieldset');
 const offerForm = document.querySelector('.ad-form');
+const offerFormFieldsets = offerForm.querySelectorAll('fieldset');
+const formSubmitButton = offerForm.querySelector('.ad-form__submit');
+const formResetButton = offerForm.querySelector('.ad-form__reset');
 const capacityElement = offerForm.querySelector('#capacity');
 const roomElement = offerForm.querySelector('#room_number');
 const timeInElement = offerForm.querySelector('#timein');
@@ -32,7 +39,37 @@ const priceSliderElement = offerForm.querySelector('.ad-form__slider');
 const typeElement = offerForm.querySelector('#type');
 priceElement.placeholder = HOUSING_TYPE_PRICE[typeElement.value];
 
-// Добавляем экземпляр Pristine. Из материалов и объяснений Академии, я так и не понял, что такое new и экземпляр. Я вижу это просто как какую-то инизиализацию скрипта, где мы добавляем на него ссылку и передаём объект настроек.
+//Переключение состояния формы
+const turnOfferFormOff = () => {
+  offerFormFieldsets.forEach((fieldset) => {
+    fieldset.disabled = true;
+  });
+  offerForm.classList.add(`${offerForm.classList[0]}--disabled`);
+};
+
+const turnOfferFormOn = () => {
+  offerFormFieldsets.forEach((fieldset) => {
+    fieldset.disabled = false;
+  });
+  offerForm.classList.remove(`${offerForm.classList[0]}--disabled`);
+};
+
+//Переключение состояния фильтров
+const turnFilterFormOff = () => {
+  filterFormFieldsets.forEach((fieldset) => {
+    fieldset.disabled = true;
+  });
+  filterForm.classList.add(`${filterForm.classList[0]}--disabled`);
+};
+
+const turnFilterFormOn = () => {
+  filterFormFieldsets.forEach((fieldset) => {
+    fieldset.disabled = false;
+  });
+  filterForm.classList.remove(`${filterForm.classList[0]}--disabled`);
+};
+
+//Валидация
 const pristine = new Pristine(offerForm,
   {
     classTo: 'ad-form__element',
@@ -45,12 +82,10 @@ const pristine = new Pristine(offerForm,
 );
 
 // Проверка количества комнат и количества гостей
-// Функция, которая содержит логику проверки
 const capacityCheck = () => ROOMS_TO_GUESTS[roomElement.value].includes(capacityElement.value);
 
 const getСapacityElementErrorMessage = () => `Для такого количества гостей подойдёт ${GUESTS_TO_ROOMS[capacityElement.value].join(' или ')}`;
 
-// Метод, который передаёт на валидацию определённого элемента нашу функцию.
 pristine.addValidator(
   capacityElement,
   capacityCheck,
@@ -70,19 +105,16 @@ pristine.addValidator(
   getRoomElementErrorMessage
 );
 
-// Функция, которая вызывает валидатор на два элемента. На два, потому что их значения зависимы друг от друга.
 const onRoomNumberChange = () => {
   pristine.validate(capacityElement);
   pristine.validate(roomElement);
 };
 
-// Вторая функция, для второго слушателя.
 const onGuestsNumberChange = () => {
   pristine.validate(capacityElement);
   pristine.validate(roomElement);
 };
 
-// Навешиваем обработчики событий на элементы с функциями, которые содержат валидацию.
 roomElement.addEventListener('change', onRoomNumberChange);
 capacityElement.addEventListener('change', onGuestsNumberChange);
 
@@ -95,7 +127,6 @@ const onTimeOutChange = () => {
   timeInElement.value = timeOutElement.value;
 };
 
-// Навешиваю два обработчика. Не знаю, как сделать изящнее.
 timeInElement.addEventListener('change', onTimeInChange);
 timeOutElement.addEventListener('change', onTimeOutChange);
 
@@ -104,14 +135,12 @@ const priceCheck = (value) => Number.parseInt(value, 10) >= HOUSING_TYPE_PRICE[t
 
 const getPriceErrorMessage = () => `Стоимость должна быть выше ${HOUSING_TYPE_PRICE[typeElement.value]}`;
 
-// Снова сообщаю валидатору, что хочу проверять элемент цены по особым правилам. Передаю функцию.
 pristine.addValidator(
   priceElement,
   priceCheck,
   getPriceErrorMessage
 );
 
-// Функция, которая валидирует элемент цены.
 const onPriceCheck = () => pristine.validate(priceElement);
 
 priceElement.addEventListener('change', onPriceCheck);
@@ -122,10 +151,6 @@ const onTypeElementChange = () => {
 };
 
 typeElement.addEventListener('change', onTypeElementChange);
-
-offerForm.addEventListener('submit', (evt) => {
-  if (!pristine.validate()) { evt.preventDefault(); }
-});
 
 // Слайдер для инпута с ценой
 noUiSlider.create(priceSliderElement, {
@@ -160,7 +185,7 @@ priceElement.addEventListener('input', onPriceChange);
 const onTypeElementChangeSlider = () => {
   priceSliderElement.noUiSlider.updateOptions({
     range: {
-      min: HOUSING_TYPE_PRICE[typeElement.value], // Что-то я не уверен, что нужно так делать. При смене значения в селекте, ручка на слайдере туда-сюда ползает. Может вообще не нужно обновлять настройки слайдера?
+      min: HOUSING_TYPE_PRICE[typeElement.value],
       max: MAX_PRICE
     },
     start: HOUSING_TYPE_PRICE[typeElement.value],
@@ -170,3 +195,42 @@ const onTypeElementChangeSlider = () => {
 };
 
 typeElement.addEventListener('change', onTypeElementChangeSlider);
+
+//Сброс формы
+const onFormReset = () => {
+  offerForm.reset();
+  filterForm.reset();
+  priceSliderElement.noUiSlider.reset();
+};
+
+formResetButton.addEventListener('click', (evt) => {
+  evt.preventDefault(); //Я не уверен, что нужно скидывать, потому что кнопка с типом ресет свою форму прекрасно скидывает.
+  onFormReset();
+  pristine.reset();
+  resetMap();
+  setStartAddress();
+});
+
+//Отправка формы
+const blockSubmitButton = () => {
+  formSubmitButton.disabled = true;
+  formSubmitButton.textContent = 'Публикация...';
+};
+
+const unblockSubmitButton = () => {
+  formSubmitButton.disabled = false;
+  formSubmitButton.textContent = 'Опубликовать';
+};
+
+const setOnOfferFormSubmit = (cb) => {
+  offerForm.addEventListener('submit', async (evt) => {
+    evt.preventDefault();
+    if (pristine.validate()) {
+      blockSubmitButton();
+      await cb(new FormData(evt.target));
+      unblockSubmitButton();
+    }
+  });
+};
+
+export { turnOfferFormOff, turnOfferFormOn, turnFilterFormOff, turnFilterFormOn, setOnOfferFormSubmit, onFormReset };
