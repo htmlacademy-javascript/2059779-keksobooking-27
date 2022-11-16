@@ -203,7 +203,8 @@ const onFormReset = () => {
   priceSliderElement.noUiSlider.reset();
 };
 
-formResetButton.addEventListener('click', () => {
+formResetButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
   onFormReset();
   pristine.reset();
   resetMap();
