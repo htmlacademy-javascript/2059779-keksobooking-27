@@ -1,5 +1,5 @@
 
-const nounsDeclension = (value, words) => {
+const nounDecline = (value, words) => {
   value = Math.abs(value) % 100;
   const num = value % 10;
   if (value > 10 && value < 20) {
@@ -14,4 +14,4 @@ const nounsDeclension = (value, words) => {
   return words[2];
 };
 
-export { nounsDeclension };
+export { nounDecline };
