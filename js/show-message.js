@@ -24,8 +24,8 @@ const onEscKeydown = (evt) => {
 
 const showSuccessMessage = () => {
   const successMessageElement = successMessageTemplate.cloneNode(true);
-  document.addEventListener('click', onMouseClick);
-  document.addEventListener('keydown', onEscKeydown);
+  successMessageElement.addEventListener('click', onMouseClick);
+  successMessageElement.addEventListener('keydown', onEscKeydown);
   bodyElement.append(successMessageElement);
   bodyElement.style.overflow = 'hidden';
 };
@@ -33,9 +33,9 @@ const showSuccessMessage = () => {
 const showErrorMessage = () => {
   const errorMessageElement = errorMessageTemplate.cloneNode(true);
   const errorButton = errorMessageElement.querySelector('.error__button');
-  document.addEventListener('click', onMouseClick);
+  errorMessageElement.addEventListener('click', onMouseClick);
   errorButton.addEventListener('click', onMouseClick);
-  document.addEventListener('keydown', onEscKeydown);
+  errorMessageElement.addEventListener('keydown', onEscKeydown);
   bodyElement.append(errorMessageElement);
   bodyElement.style.overflow = 'hidden';
 };
