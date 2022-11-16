@@ -36,6 +36,10 @@ const createOfferElement = (offersData) => {
     });
   }
 
+  if (!featuresList.innerHTML) { //Удаляю родительский элемент пустого списка.
+    featuresList.remove();
+  }
+
   if (offer.description && offer.description.length) {
     offerELement.querySelector('.popup__description').textContent = offer.description;
   } else {
