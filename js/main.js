@@ -2,6 +2,7 @@ import { turnOfferFormOff, turnOfferFormOn, turnFilterFormOn, turnFilterFormOff,
 import { mapInit, setStartAddress, setOnMapLoad, setOfferPinMarker, resetMap } from './map.js';
 import { getData, sendData } from './api.js';
 import { showSuccessMessage, showErrorMessage, showAlertMessage } from './show-message.js';
+import { compareOffers, setFeatureChange } from './filter.js';
 
 const OFFERS_COUNT = 10;
 
@@ -10,7 +11,10 @@ turnOfferFormOff();
 mapInit();
 
 const onGetDataSuccess = (offers) => {
-  setOfferPinMarker(offers.slice(0, OFFERS_COUNT));
+  const filteredOffers = offers.slice().sort(compareOffers).slice(0, OFFERS_COUNT);
+
+  setOfferPinMarker(filteredOffers);
+  setFeatureChange(() => setOfferPinMarker(filteredOffers));
   turnFilterFormOn();
 };
 
