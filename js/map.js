@@ -1,7 +1,4 @@
 import { createOfferElement } from './popup.js';
-import { throttle } from './util.js';
-
-const THROTTLE_DELAY = 5000;
 
 const START_COORDINATE = {
   lat: 35.683171,
@@ -56,14 +53,10 @@ const setStartAddress = () => {
   addressElement.value = `${START_COORDINATE.lat}, ${START_COORDINATE.lng}`;
 };
 
-const onPinMove = (pin) => {
-  const { lat, lng } = pin.target.getLatLng();
-  addressElement.value = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
-};
-
 const setAddressOnPinMove = () => {
-  mainPinMarker.on('move', (evt) => {
-    throttle(onPinMove(evt), THROTTLE_DELAY); //И, ничего не работает.
+  mainPinMarker.on('moveend', (evt) => {
+    const { lat, lng } = evt.target.getLatLng();
+    addressElement.value = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
   });
 };
 
