@@ -47,6 +47,8 @@ const commonPinIcon = L.icon({
   iconAnchor: [20, 40],
 });
 
+const commonPinsGroup = L.layerGroup().addTo(map);
+
 const setMainPinMarker = () => mainPinMarker.addTo(map);
 
 const setStartAddress = () => {
@@ -71,7 +73,9 @@ const setOfferPinMarker = (offers) => {
         icon: commonPinIcon
       }
     );
-    offerMarker.addTo(map).bindPopup(createOfferElement(offer));
+    offerMarker
+      .addTo(commonPinsGroup)
+      .bindPopup(createOfferElement(offer));
   });
 };
 
@@ -95,4 +99,6 @@ const resetMap = () => {
   });
 };
 
-export { mapInit, setStartAddress, setOnMapLoad, setMainPinMarker, setOfferPinMarker, resetMap };
+const removeCommonPins = () => commonPinsGroup.clearLayers();
+
+export { mapInit, setStartAddress, setOnMapLoad, setMainPinMarker, setOfferPinMarker, resetMap, removeCommonPins };
