@@ -75,4 +75,10 @@ const getFilteredHousings = (housings) => {
   return filteredHousings;
 };
 
-export { getFilteredHousings };
+const setOnFilterChange = (cb) => {
+  offerFiltersForm.addEventListener('change', () => {
+    cb();
+  });
+};
+
+export { getFilteredHousings, setOnFilterChange };
