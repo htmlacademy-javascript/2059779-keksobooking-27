@@ -1,4 +1,4 @@
-import { resetMap, setStartAddress } from './map.js';
+import { resetMap, resetCommonPins, setStartAddress } from './map.js';
 
 const ROOMS_TO_GUESTS = {
   1: ['1'],
@@ -197,19 +197,22 @@ const onTypeElementChangeSlider = () => {
 typeElement.addEventListener('change', onTypeElementChangeSlider);
 
 //Сброс формы
-const onFormReset = () => {
+const setOnFormReset = () => {
   offerForm.reset();
   filterForm.reset();
   priceSliderElement.noUiSlider.reset();
 };
 
-formResetButton.addEventListener('click', (evt) => {
-  evt.preventDefault();
-  onFormReset();
-  pristine.reset();
-  resetMap();
-  setStartAddress();
-});
+const setOnResetButton = (offers) => {
+  formResetButton.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    setOnFormReset();
+    pristine.reset();
+    resetMap();
+    setStartAddress();
+    resetCommonPins(offers);
+  });
+};
 
 //Отправка формы
 const blockSubmitButton = () => {
@@ -233,4 +236,4 @@ const setOnOfferFormSubmit = (cb) => {
   });
 };
 
-export { turnOfferFormOff, turnOfferFormOn, turnFilterFormOff, turnFilterFormOn, setOnOfferFormSubmit, onFormReset };
+export { turnOfferFormOff, turnOfferFormOn, turnFilterFormOff, turnFilterFormOn, setOnOfferFormSubmit, setOnFormReset, setOnResetButton };

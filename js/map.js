@@ -104,4 +104,4 @@ const resetCommonPins = (offers) => {
   setOfferPinMarker(offers);
 };
 
-export { mapInit, setStartAddress, setOnMapLoad, setMainPinMarker, setOfferPinMarker, resetMap, resetCommonPins };
+export { mapInit, setStartAddress, setOnMapLoad, setOfferPinMarker, resetMap, resetCommonPins };
