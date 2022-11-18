@@ -1,6 +1,6 @@
 import { createOfferElement } from './popup.js';
 
-const START_COORDINATE = {
+const START_COORDINATE = { //Я не уверен в правилах именования. Это может быть константой? Или это перечисление?
   lat: 35.683171,
   lng: 139.753143
 };
