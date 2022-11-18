@@ -1,6 +1,6 @@
 import { createOfferElement } from './popup.js';
 
-const START_COORDINATE = {
+const START_COORDINATE = { //Я не уверен в правилах именования. Это может быть константой? Или это перечисление?
   lat: 35.683171,
   lng: 139.753143
 };
@@ -47,6 +47,8 @@ const commonPinIcon = L.icon({
   iconAnchor: [20, 40],
 });
 
+const commonPinsGroup = L.layerGroup().addTo(map);
+
 const setMainPinMarker = () => mainPinMarker.addTo(map);
 
 const setStartAddress = () => {
@@ -71,7 +73,9 @@ const setOfferPinMarker = (offers) => {
         icon: commonPinIcon
       }
     );
-    offerMarker.addTo(map).bindPopup(createOfferElement(offer));
+    offerMarker
+      .addTo(commonPinsGroup)
+      .bindPopup(createOfferElement(offer));
   });
 };
 
@@ -95,4 +99,9 @@ const resetMap = () => {
   });
 };
 
-export { mapInit, setStartAddress, setOnMapLoad, setMainPinMarker, setOfferPinMarker, resetMap };
+const resetCommonPins = (offers) => {
+  commonPinsGroup.clearLayers();
+  setOfferPinMarker(offers);
+};
+
+export { mapInit, setStartAddress, setOnMapLoad, setOfferPinMarker, resetMap, resetCommonPins };
