@@ -45,6 +45,7 @@ const turnOfferFormOff = () => {
     fieldset.disabled = true;
   });
   offerForm.classList.add(`${offerForm.classList[0]}--disabled`);
+  priceSliderElement.setAttribute('disabled', true);
 };
 
 const turnOfferFormOn = () => {
@@ -52,6 +53,7 @@ const turnOfferFormOn = () => {
     fieldset.disabled = false;
   });
   offerForm.classList.remove(`${offerForm.classList[0]}--disabled`);
+  priceSliderElement.removeAttribute('disabled');
 };
 
 //Переключение состояния фильтров
