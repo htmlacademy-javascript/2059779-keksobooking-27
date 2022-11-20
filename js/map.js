@@ -53,7 +53,7 @@ const commonPinsGroup = L.layerGroup().addTo(map);
 const setMainPinMarker = () => mainPinMarker.addTo(map);
 
 const setStartAddress = () => {
-  addressElement.value = `${StartCoordinate.lat}, ${StartCoordinate.LNG}`;
+  addressElement.value = `${StartCoordinate.LAT}, ${StartCoordinate.LNG}`;
 };
 
 const setAddressOnPinMove = () => {
