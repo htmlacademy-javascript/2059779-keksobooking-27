@@ -15,17 +15,19 @@ const hideMessage = () => {
 };
 
 const onMouseClick = () => hideMessage();
+
 const onEscKeydown = (evt) => {
   if (isEscKey(evt)) {
     evt.preventDefault();
     hideMessage();
+    document.removeEventListener('keydown', onEscKeydown);
   }
 };
 
 const showSuccessMessage = () => {
   const successMessageElement = successMessageTemplate.cloneNode(true);
   successMessageElement.addEventListener('click', onMouseClick);
-  successMessageElement.addEventListener('keydown', onEscKeydown);
+  document.addEventListener('keydown', onEscKeydown);
   bodyElement.append(successMessageElement);
   bodyElement.style.overflow = 'hidden';
 };
@@ -35,7 +37,7 @@ const showErrorMessage = () => {
   const errorButton = errorMessageElement.querySelector('.error__button');
   errorMessageElement.addEventListener('click', onMouseClick);
   errorButton.addEventListener('click', onMouseClick);
-  errorMessageElement.addEventListener('keydown', onEscKeydown);
+  document.addEventListener('keydown', onEscKeydown);
   bodyElement.append(errorMessageElement);
   bodyElement.style.overflow = 'hidden';
 };
