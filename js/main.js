@@ -11,7 +11,7 @@ turnFilterFormOff();
 turnOfferFormOff();
 mapInit();
 
-const onGetDataSuccess = (offers) => { //Здесь какая-то мешанина получилась. Но хотя бы работает. Не знаю, как сделать это изящнее и понятнее.
+const onGetDataSuccess = (offers) => {
   turnFilterFormOn();
   setOfferPinMarker(getFilteredHousings(offers));
   setOnFilterChange(debounce(
