@@ -4,6 +4,7 @@ import { getData, sendData } from './api.js';
 import { showSuccessMessage, showErrorMessage, showAlertMessage } from './show-message.js';
 import { getFilteredHousings, setOnFilterChange } from './filter.js';
 import { debounce } from './util.js';
+import './avatar.js';
 
 const RERENDER_DELAY = 500;
 
