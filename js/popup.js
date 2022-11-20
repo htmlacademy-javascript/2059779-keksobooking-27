@@ -34,9 +34,7 @@ const createOfferElement = (offersData) => {
       featuresListItem.classList.add(`${modificatorClass}${item}`);
       featuresList.append(featuresListItem.cloneNode(false));
     });
-  }
-
-  if (!featuresList.innerHTML) { //Удаляю родительский элемент пустого списка.
+  } else {
     featuresList.remove();
   }
 
