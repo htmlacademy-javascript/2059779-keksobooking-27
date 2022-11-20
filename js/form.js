@@ -1,5 +1,7 @@
 import { resetMap, resetCommonPins, setStartAddress } from './map.js';
 
+const MAX_PRICE = 100000;
+
 const RoomsToGuests = {
   1: ['1'],
   2: ['1', '2'],
@@ -13,8 +15,6 @@ const GuestsToRooms = {
   3: ['3 комнаты'],
   0: ['100 комнат']
 };
-
-const MAX_PRICE = 100000;
 
 const housingTypePrice = {
   bungalow: 0,
@@ -45,7 +45,6 @@ const turnOfferFormOff = () => {
     fieldset.disabled = true;
   });
   offerForm.classList.add(`${offerForm.classList[0]}--disabled`);
-  priceSliderElement.setAttribute('disabled', true);
 };
 
 const turnOfferFormOn = () => {
@@ -53,7 +52,6 @@ const turnOfferFormOn = () => {
     fieldset.disabled = false;
   });
   offerForm.classList.remove(`${offerForm.classList[0]}--disabled`);
-  priceSliderElement.removeAttribute('disabled');
 };
 
 //Переключение состояния фильтров

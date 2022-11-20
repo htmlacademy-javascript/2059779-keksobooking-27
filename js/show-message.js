@@ -1,3 +1,5 @@
+import { isEscKey } from './util.js';
+
 const bodyElement = document.body;
 const successMessageTemplate = bodyElement.querySelector('#success')
   .content
@@ -11,8 +13,6 @@ const hideMessage = () => {
   messageElement.remove();
   bodyElement.style.overflow = 'auto';
 };
-
-const isEscKey = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
 const onMouseClick = () => hideMessage();
 const onEscKeydown = (evt) => {
