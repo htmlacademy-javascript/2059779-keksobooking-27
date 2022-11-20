@@ -608,6 +608,11 @@ fieldset {
   border-radius: 5px;
 }
 
+.ad-form__image {
+  width: 100%;
+  height: auto;
+}
+
 .ad-form__element--submit {
   -ms-flex-preferred-size: 100%;
       flex-basis: 100%;

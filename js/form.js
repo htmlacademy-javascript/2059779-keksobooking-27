@@ -1,4 +1,6 @@
 import { resetMap, resetCommonPins, setStartAddress } from './map.js';
+import { resetAvatar } from './avatar.js';
+import { resetImage } from './housing-image.js';
 
 const MAX_PRICE = 100000;
 
@@ -201,6 +203,8 @@ const setOnFormReset = () => {
   offerForm.reset();
   filterForm.reset();
   priceSliderElement.noUiSlider.reset();
+  resetAvatar();
+  resetImage();
 };
 
 const setOnResetButton = (offers) => {
