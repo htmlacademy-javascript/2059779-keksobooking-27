@@ -1,10 +1,11 @@
 import { createOfferElement } from './popup.js';
 
-const START_COORDINATE = { //Я не уверен в правилах именования. Это может быть константой? Или это перечисление?
-  lat: 35.683171,
-  lng: 139.753143
-};
 const START_ZOOM = 13;
+
+const StartCoordinate = { //Я не уверен в правилах именования. Это может быть константой? Или это перечисление?
+  LAT: 35.683171,
+  LNG: 139.753143
+};
 
 const map = L.map('map-canvas');
 const addressElement = document.querySelector('#address');
@@ -12,8 +13,8 @@ addressElement.readOnly = true;
 
 const setMap = () => {
   map.setView({
-    lat: START_COORDINATE.lat,
-    lng: START_COORDINATE.lng
+    lat: StartCoordinate.LAT,
+    lng: StartCoordinate.LNG
   }, START_ZOOM);
 
   L.tileLayer(
@@ -32,8 +33,8 @@ const mainPinIcon = L.icon({
 
 const mainPinMarker = L.marker(
   {
-    lat: START_COORDINATE.lat,
-    lng: START_COORDINATE.lng
+    lat: StartCoordinate.LAT,
+    lng: StartCoordinate.LNG
   },
   {
     draggable: true,
@@ -52,7 +53,7 @@ const commonPinsGroup = L.layerGroup().addTo(map);
 const setMainPinMarker = () => mainPinMarker.addTo(map);
 
 const setStartAddress = () => {
-  addressElement.value = `${START_COORDINATE.lat}, ${START_COORDINATE.lng}`;
+  addressElement.value = `${StartCoordinate.lat}, ${StartCoordinate.LNG}`;
 };
 
 const setAddressOnPinMove = () => {
@@ -90,12 +91,12 @@ const mapInit = () => {
 const resetMap = () => {
   map.closePopup();
   map.setView({
-    lat: START_COORDINATE.lat,
-    lng: START_COORDINATE.lng
+    lat: StartCoordinate.LAT,
+    lng: StartCoordinate.LNG
   }, START_ZOOM);
   mainPinMarker.setLatLng({
-    lat: START_COORDINATE.lat,
-    lng: START_COORDINATE.lng
+    lat: StartCoordinate.LAT,
+    lng: StartCoordinate.LNG
   });
 };
 
