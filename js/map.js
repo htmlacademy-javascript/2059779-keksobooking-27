@@ -1,18 +1,19 @@
 import { createOfferElement } from './popup.js';
 
-const START_COORDINATE = {
-  startLat: 35.683171,
-  startLng: 139.753143
+const START_COORDINATE = { //Я не уверен в правилах именования. Это может быть константой? Или это перечисление?
+  lat: 35.683171,
+  lng: 139.753143
 };
 const START_ZOOM = 13;
 
 const map = L.map('map-canvas');
 const addressElement = document.querySelector('#address');
+addressElement.readOnly = true;
 
 const setMap = () => {
   map.setView({
-    lat: START_COORDINATE.startLat,
-    lng: START_COORDINATE.startLng
+    lat: START_COORDINATE.lat,
+    lng: START_COORDINATE.lng
   }, START_ZOOM);
 
   L.tileLayer(
@@ -31,8 +32,8 @@ const mainPinIcon = L.icon({
 
 const mainPinMarker = L.marker(
   {
-    lat: START_COORDINATE.startLat,
-    lng: START_COORDINATE.startLng
+    lat: START_COORDINATE.lat,
+    lng: START_COORDINATE.lng
   },
   {
     draggable: true,
@@ -46,15 +47,16 @@ const commonPinIcon = L.icon({
   iconAnchor: [20, 40],
 });
 
+const commonPinsGroup = L.layerGroup().addTo(map);
+
 const setMainPinMarker = () => mainPinMarker.addTo(map);
 
 const setStartAddress = () => {
-  const { lat, lng } = mainPinMarker.getLatLng();
-  addressElement.value = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+  addressElement.value = `${START_COORDINATE.lat}, ${START_COORDINATE.lng}`;
 };
 
 const setAddressOnPinMove = () => {
-  mainPinMarker.on('move', (evt) => {
+  mainPinMarker.on('moveend', (evt) => {
     const { lat, lng } = evt.target.getLatLng();
     addressElement.value = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
   });
@@ -71,11 +73,13 @@ const setOfferPinMarker = (offers) => {
         icon: commonPinIcon
       }
     );
-    offerMarker.addTo(map).bindPopup(createOfferElement(offer));
+    offerMarker
+      .addTo(commonPinsGroup)
+      .bindPopup(createOfferElement(offer));
   });
 };
 
-const setOnMapLoad = (cb) => map.on('load', cb);
+const setOnMapLoad = (cb) => map.on('load', cb());
 
 const mapInit = () => {
   setMap();
@@ -86,13 +90,18 @@ const mapInit = () => {
 const resetMap = () => {
   map.closePopup();
   map.setView({
-    lat: START_COORDINATE.startLat,
-    lng: START_COORDINATE.startLng
+    lat: START_COORDINATE.lat,
+    lng: START_COORDINATE.lng
   }, START_ZOOM);
   mainPinMarker.setLatLng({
-    lat: START_COORDINATE.startLat,
-    lng: START_COORDINATE.startLng
+    lat: START_COORDINATE.lat,
+    lng: START_COORDINATE.lng
   });
 };
 
-export { mapInit, setStartAddress, setOnMapLoad, setMainPinMarker, setOfferPinMarker, resetMap };
+const resetCommonPins = (offers) => {
+  commonPinsGroup.clearLayers();
+  setOfferPinMarker(offers);
+};
+
+export { mapInit, setStartAddress, setOnMapLoad, setOfferPinMarker, resetMap, resetCommonPins };

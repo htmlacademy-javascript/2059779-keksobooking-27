@@ -1,13 +1,13 @@
-import { setStartAddress, resetMap } from './map.js'; //Утянул сюда. Иначе в main придётся по идее закидывать стартовые координаты. А должны ли они там быть?
+import { resetMap, resetCommonPins, setStartAddress } from './map.js';
 
-const ROOMS_TO_GUESTS = {
+const RoomsToGuests = {
   1: ['1'],
   2: ['1', '2'],
   3: ['1', '2', '3'],
   100: ['0']
 };
 
-const GUESTS_TO_ROOMS = {
+const GuestsToRooms = {
   1: ['1', '2', '3 комнаты'],
   2: ['1', '2 комнаты'],
   3: ['3 комнаты'],
@@ -16,7 +16,7 @@ const GUESTS_TO_ROOMS = {
 
 const MAX_PRICE = 100000;
 
-const HOUSING_TYPE_PRICE = {
+const housingTypePrice = {
   bungalow: 0,
   flat: 1000,
   hotel: 3000,
@@ -37,7 +37,7 @@ const timeOutElement = offerForm.querySelector('#timeout');
 const priceElement = offerForm.querySelector('#price');
 const priceSliderElement = offerForm.querySelector('.ad-form__slider');
 const typeElement = offerForm.querySelector('#type');
-priceElement.placeholder = HOUSING_TYPE_PRICE[typeElement.value];
+priceElement.placeholder = housingTypePrice[typeElement.value];
 
 //Переключение состояния формы
 const turnOfferFormOff = () => {
@@ -45,6 +45,7 @@ const turnOfferFormOff = () => {
     fieldset.disabled = true;
   });
   offerForm.classList.add(`${offerForm.classList[0]}--disabled`);
+  priceSliderElement.setAttribute('disabled', true);
 };
 
 const turnOfferFormOn = () => {
@@ -52,6 +53,7 @@ const turnOfferFormOn = () => {
     fieldset.disabled = false;
   });
   offerForm.classList.remove(`${offerForm.classList[0]}--disabled`);
+  priceSliderElement.removeAttribute('disabled');
 };
 
 //Переключение состояния фильтров
@@ -82,9 +84,9 @@ const pristine = new Pristine(offerForm,
 );
 
 // Проверка количества комнат и количества гостей
-const capacityCheck = () => ROOMS_TO_GUESTS[roomElement.value].includes(capacityElement.value);
+const capacityCheck = () => RoomsToGuests[roomElement.value].includes(capacityElement.value);
 
-const getСapacityElementErrorMessage = () => `Для такого количества гостей подойдёт ${GUESTS_TO_ROOMS[capacityElement.value].join(' или ')}`;
+const getСapacityElementErrorMessage = () => `Для такого количества гостей подойдёт ${GuestsToRooms[capacityElement.value].join(' или ')}`;
 
 pristine.addValidator(
   capacityElement,
@@ -131,9 +133,9 @@ timeInElement.addEventListener('change', onTimeInChange);
 timeOutElement.addEventListener('change', onTimeOutChange);
 
 // Проверка цены в зависимости от выбранного типа жилья
-const priceCheck = (value) => Number.parseInt(value, 10) >= HOUSING_TYPE_PRICE[typeElement.value];
+const priceCheck = (value) => Number.parseInt(value, 10) >= housingTypePrice[typeElement.value];
 
-const getPriceErrorMessage = () => `Стоимость должна быть выше ${HOUSING_TYPE_PRICE[typeElement.value]}`;
+const getPriceErrorMessage = () => `Стоимость должна быть выше ${housingTypePrice[typeElement.value]}`;
 
 pristine.addValidator(
   priceElement,
@@ -147,7 +149,7 @@ priceElement.addEventListener('change', onPriceCheck);
 typeElement.addEventListener('change', onPriceCheck);
 
 const onTypeElementChange = () => {
-  priceElement.placeholder = HOUSING_TYPE_PRICE[typeElement.value];
+  priceElement.placeholder = housingTypePrice[typeElement.value];
 };
 
 typeElement.addEventListener('change', onTypeElementChange);
@@ -185,10 +187,10 @@ priceElement.addEventListener('input', onPriceChange);
 const onTypeElementChangeSlider = () => {
   priceSliderElement.noUiSlider.updateOptions({
     range: {
-      min: HOUSING_TYPE_PRICE[typeElement.value],
+      min: housingTypePrice[typeElement.value],
       max: MAX_PRICE
     },
-    start: HOUSING_TYPE_PRICE[typeElement.value],
+    start: housingTypePrice[typeElement.value],
     step: 500
   });
   priceSliderElement.noUiSlider.set(priceElement.value);
@@ -197,19 +199,22 @@ const onTypeElementChangeSlider = () => {
 typeElement.addEventListener('change', onTypeElementChangeSlider);
 
 //Сброс формы
-const onFormReset = () => {
+const setOnFormReset = () => {
   offerForm.reset();
   filterForm.reset();
   priceSliderElement.noUiSlider.reset();
 };
 
-formResetButton.addEventListener('click', (evt) => {
-  evt.preventDefault(); //Я не уверен, что нужно скидывать, потому что кнопка с типом ресет свою форму прекрасно скидывает.
-  onFormReset();
-  pristine.reset();
-  resetMap();
-  setStartAddress();
-});
+const setOnResetButton = (offers) => {
+  formResetButton.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    setOnFormReset();
+    pristine.reset();
+    resetMap();
+    setStartAddress();
+    resetCommonPins(offers);
+  });
+};
 
 //Отправка формы
 const blockSubmitButton = () => {
@@ -227,10 +232,10 @@ const setOnOfferFormSubmit = (cb) => {
     evt.preventDefault();
     if (pristine.validate()) {
       blockSubmitButton();
-      await cb(new FormData(evt.target));
+      await cb(new FormData(offerForm));
       unblockSubmitButton();
     }
   });
 };
 
-export { turnOfferFormOff, turnOfferFormOn, turnFilterFormOff, turnFilterFormOn, setOnOfferFormSubmit, onFormReset };
+export { turnOfferFormOff, turnOfferFormOn, turnFilterFormOff, turnFilterFormOn, setOnOfferFormSubmit, setOnFormReset, setOnResetButton };
