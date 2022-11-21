@@ -1,5 +1,7 @@
 import { isEscKey } from './util.js';
 
+const ALERT_TIMEOUT = 2000;
+
 const bodyElement = document.body;
 const successMessageTemplate = bodyElement.querySelector('#success')
   .content
@@ -51,7 +53,7 @@ const showAlertMessage = (message) => {
 
   setTimeout(() => {
     alertElement.remove();
-  }, 2000);
+  }, ALERT_TIMEOUT);
 };
 
 export { showSuccessMessage, showErrorMessage, showAlertMessage };
