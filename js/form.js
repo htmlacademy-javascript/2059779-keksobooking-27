@@ -47,6 +47,7 @@ const turnOfferFormOff = () => {
     fieldset.disabled = true;
   });
   offerForm.classList.add(`${offerForm.classList[0]}--disabled`);
+  priceSliderElement.setAttribute('disabled', true); // Атрибут устанавливается на DIV, что нарушает валидность, но так гласит документация самого слайдера https://refreshless.com/nouislider/more/#section-disable. Другого способа найти не удалось.
 };
 
 const turnOfferFormOn = () => {
@@ -54,6 +55,7 @@ const turnOfferFormOn = () => {
     fieldset.disabled = false;
   });
   offerForm.classList.remove(`${offerForm.classList[0]}--disabled`);
+  priceSliderElement.removeAttribute('disabled');
 };
 
 //Переключение состояния фильтров
