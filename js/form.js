@@ -1,4 +1,8 @@
 import { resetMap, resetCommonPins, setStartAddress } from './map.js';
+import { resetAvatar } from './avatar.js';
+import { resetImage } from './housing-image.js';
+
+const MAX_PRICE = 100000;
 
 const RoomsToGuests = {
   1: ['1'],
@@ -13,8 +17,6 @@ const GuestsToRooms = {
   3: ['3 комнаты'],
   0: ['100 комнат']
 };
-
-const MAX_PRICE = 100000;
 
 const housingTypePrice = {
   bungalow: 0,
@@ -45,7 +47,7 @@ const turnOfferFormOff = () => {
     fieldset.disabled = true;
   });
   offerForm.classList.add(`${offerForm.classList[0]}--disabled`);
-  priceSliderElement.setAttribute('disabled', true);
+  priceSliderElement.setAttribute('disabled', true); // Атрибут устанавливается на DIV, что нарушает валидность, но так гласит документация самого слайдера https://refreshless.com/nouislider/more/#section-disable. Другого способа найти не удалось.
 };
 
 const turnOfferFormOn = () => {
@@ -84,13 +86,13 @@ const pristine = new Pristine(offerForm,
 );
 
 // Проверка количества комнат и количества гостей
-const capacityCheck = () => RoomsToGuests[roomElement.value].includes(capacityElement.value);
+const checkCapacity = () => RoomsToGuests[roomElement.value].includes(capacityElement.value);
 
 const getСapacityElementErrorMessage = () => `Для такого количества гостей подойдёт ${GuestsToRooms[capacityElement.value].join(' или ')}`;
 
 pristine.addValidator(
   capacityElement,
-  capacityCheck,
+  checkCapacity,
   getСapacityElementErrorMessage
 );
 
@@ -103,7 +105,7 @@ const getRoomElementErrorMessage = () => {
 
 pristine.addValidator(
   roomElement,
-  capacityCheck,
+  checkCapacity,
   getRoomElementErrorMessage
 );
 
@@ -133,20 +135,20 @@ timeInElement.addEventListener('change', onTimeInChange);
 timeOutElement.addEventListener('change', onTimeOutChange);
 
 // Проверка цены в зависимости от выбранного типа жилья
-const priceCheck = (value) => Number.parseInt(value, 10) >= housingTypePrice[typeElement.value];
+const checkPrice = (value) => Number.parseInt(value, 10) >= housingTypePrice[typeElement.value];
 
 const getPriceErrorMessage = () => `Стоимость должна быть выше ${housingTypePrice[typeElement.value]}`;
 
 pristine.addValidator(
   priceElement,
-  priceCheck,
+  checkPrice,
   getPriceErrorMessage
 );
 
-const onPriceCheck = () => pristine.validate(priceElement);
+const onCheckPrice = () => pristine.validate(priceElement);
 
-priceElement.addEventListener('change', onPriceCheck);
-typeElement.addEventListener('change', onPriceCheck);
+priceElement.addEventListener('change', onCheckPrice);
+typeElement.addEventListener('change', onCheckPrice);
 
 const onTypeElementChange = () => {
   priceElement.placeholder = housingTypePrice[typeElement.value];
@@ -203,6 +205,8 @@ const setOnFormReset = () => {
   offerForm.reset();
   filterForm.reset();
   priceSliderElement.noUiSlider.reset();
+  resetAvatar();
+  resetImage();
 };
 
 const setOnResetButton = (offers) => {

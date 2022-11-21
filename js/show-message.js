@@ -1,3 +1,7 @@
+import { isEscKey } from './util.js';
+
+const ALERT_TIMEOUT = 2000;
+
 const bodyElement = document.body;
 const successMessageTemplate = bodyElement.querySelector('#success')
   .content
@@ -12,20 +16,20 @@ const hideMessage = () => {
   bodyElement.style.overflow = 'auto';
 };
 
-const isEscKey = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
-
 const onMouseClick = () => hideMessage();
+
 const onEscKeydown = (evt) => {
   if (isEscKey(evt)) {
     evt.preventDefault();
     hideMessage();
+    document.removeEventListener('keydown', onEscKeydown);
   }
 };
 
 const showSuccessMessage = () => {
   const successMessageElement = successMessageTemplate.cloneNode(true);
   successMessageElement.addEventListener('click', onMouseClick);
-  successMessageElement.addEventListener('keydown', onEscKeydown);
+  document.addEventListener('keydown', onEscKeydown);
   bodyElement.append(successMessageElement);
   bodyElement.style.overflow = 'hidden';
 };
@@ -35,7 +39,7 @@ const showErrorMessage = () => {
   const errorButton = errorMessageElement.querySelector('.error__button');
   errorMessageElement.addEventListener('click', onMouseClick);
   errorButton.addEventListener('click', onMouseClick);
-  errorMessageElement.addEventListener('keydown', onEscKeydown);
+  document.addEventListener('keydown', onEscKeydown);
   bodyElement.append(errorMessageElement);
   bodyElement.style.overflow = 'hidden';
 };
@@ -49,7 +53,7 @@ const showAlertMessage = (message) => {
 
   setTimeout(() => {
     alertElement.remove();
-  }, 2000);
+  }, ALERT_TIMEOUT);
 };
 
 export { showSuccessMessage, showErrorMessage, showAlertMessage };
