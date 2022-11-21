@@ -82,7 +82,7 @@ const setOfferPinMarker = (offers) => {
 
 const setOnMapLoad = (cb) => map.on('load', cb());
 
-const mapInit = () => {
+const initMap = () => {
   setMap();
   setMainPinMarker();
   setAddressOnPinMove();
@@ -105,4 +105,4 @@ const resetCommonPins = (offers) => {
   setOfferPinMarker(offers);
 };
 
-export { mapInit, setStartAddress, setOnMapLoad, setOfferPinMarker, resetMap, resetCommonPins };
+export { initMap, setStartAddress, setOnMapLoad, setOfferPinMarker, resetMap, resetCommonPins };

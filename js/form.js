@@ -86,13 +86,13 @@ const pristine = new Pristine(offerForm,
 );
 
 // Проверка количества комнат и количества гостей
-const capacityCheck = () => RoomsToGuests[roomElement.value].includes(capacityElement.value);
+const checkCapacity = () => RoomsToGuests[roomElement.value].includes(capacityElement.value);
 
 const getСapacityElementErrorMessage = () => `Для такого количества гостей подойдёт ${GuestsToRooms[capacityElement.value].join(' или ')}`;
 
 pristine.addValidator(
   capacityElement,
-  capacityCheck,
+  checkCapacity,
   getСapacityElementErrorMessage
 );
 
@@ -105,7 +105,7 @@ const getRoomElementErrorMessage = () => {
 
 pristine.addValidator(
   roomElement,
-  capacityCheck,
+  checkCapacity,
   getRoomElementErrorMessage
 );
 
@@ -135,20 +135,20 @@ timeInElement.addEventListener('change', onTimeInChange);
 timeOutElement.addEventListener('change', onTimeOutChange);
 
 // Проверка цены в зависимости от выбранного типа жилья
-const priceCheck = (value) => Number.parseInt(value, 10) >= housingTypePrice[typeElement.value];
+const checkPrice = (value) => Number.parseInt(value, 10) >= housingTypePrice[typeElement.value];
 
 const getPriceErrorMessage = () => `Стоимость должна быть выше ${housingTypePrice[typeElement.value]}`;
 
 pristine.addValidator(
   priceElement,
-  priceCheck,
+  checkPrice,
   getPriceErrorMessage
 );
 
-const onPriceCheck = () => pristine.validate(priceElement);
+const onCheckPrice = () => pristine.validate(priceElement);
 
-priceElement.addEventListener('change', onPriceCheck);
-typeElement.addEventListener('change', onPriceCheck);
+priceElement.addEventListener('change', onCheckPrice);
+typeElement.addEventListener('change', onCheckPrice);
 
 const onTypeElementChange = () => {
   priceElement.placeholder = housingTypePrice[typeElement.value];
