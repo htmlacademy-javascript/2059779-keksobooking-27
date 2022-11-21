@@ -1,9 +1,9 @@
+const OFFERS_COUNT = 10;
+
 const Price = {
   MIDDLE: 10000,
   HIGH: 50000
 };
-
-const OFFERS_COUNT = 10;
 
 const offerFiltersForm = document.querySelector('.map__filters');
 const housingType = offerFiltersForm.querySelector('#housing-type');
