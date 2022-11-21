@@ -36,7 +36,8 @@ setOnOfferFormSubmit(async (data) => {
   await sendData(onSendDataSuccess, showErrorMessage, data);
 });
 
-
-setOnMapLoad(turnOfferFormOn);
-getData(onGetDataSuccess, showAlertMessage);
+setOnMapLoad(() => {
+  turnOfferFormOn();
+  getData(onGetDataSuccess, showAlertMessage);
+});
 setStartAddress();
