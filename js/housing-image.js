@@ -10,6 +10,7 @@ imageChooser.addEventListener('change', () => {
   if (matches) {
     imagePreviewContainer.innerHTML = '';
     const imageElement = document.createElement('img');
+    imageElement.alt = 'Фотография жилья';
     imageElement.classList.add('ad-form__image');
     imageElement.src = URL.createObjectURL(file);
     imagePreviewContainer.append(imageElement);
