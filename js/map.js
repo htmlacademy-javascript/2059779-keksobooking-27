@@ -2,7 +2,7 @@ import { createOfferElement } from './popup.js';
 
 const START_ZOOM = 13;
 
-const StartCoordinate = { //Я не уверен в правилах именования. Это может быть константой? Или это перечисление?
+const StartCoordinate = {
   LAT: 35.683171,
   LNG: 139.753143
 };
