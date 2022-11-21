@@ -1,5 +1,5 @@
 import { turnOfferFormOff, turnOfferFormOn, turnFilterFormOn, turnFilterFormOff, setOnOfferFormSubmit, setOnFormReset, setOnResetButton } from './form.js';
-import { mapInit, setStartAddress, setOnMapLoad, setOfferPinMarker, resetMap, resetCommonPins } from './map.js';
+import { initMap, setStartAddress, setOnMapLoad, setOfferPinMarker, resetMap, resetCommonPins } from './map.js';
 import { getData, sendData } from './api.js';
 import { showSuccessMessage, showErrorMessage, showAlertMessage } from './show-message.js';
 import { getFilteredHousings, setOnFilterChange } from './filter.js';
@@ -11,7 +11,7 @@ const RERENDER_DELAY = 500;
 
 turnFilterFormOff();
 turnOfferFormOff();
-mapInit();
+initMap();
 
 const onGetDataSuccess = (offers) => {
   turnFilterFormOn();
