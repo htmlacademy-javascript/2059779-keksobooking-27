@@ -52,9 +52,7 @@ const createOfferElement = (offersData) => {
       photoElement.src = photo;
       photosContainer.append(photoElement.cloneNode(false));
     });
-  }
-
-  if (!photosContainer.innerHTML) { //Удаляю родительский элемент фоток.
+  } else {
     photosContainer.remove();
   }
 
